@@ -364,6 +364,8 @@
     </style>
 
 <script>
+let currentRating = 0; // To store the selected star rating
+
 // Function to clear the content area
 function clearContent() {
   document.getElementById("contentArea").innerHTML = `
@@ -477,7 +479,7 @@ function loadMainContent() {
 	<p>Minecraft</p>
 	<a href="https://www.minecraft.net" >https://www.minecraft.net/</a>
 	<hr>
-	<h3>THANK - YOU</h3>
+	<h3>THANKS - YOU</h3>
 
   `;
 }
@@ -487,7 +489,7 @@ function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
     const isDarkMode = document.body.classList.contains('dark-mode');
     localStorage.setItem('darkMode', isDarkMode); // Save dark mode state
-    // Update button text (optional)
+    // Update button text
     document.getElementById('darkModeToggle').textContent = isDarkMode ? 'Light Mode' : 'Dark Mode';
 }
 
@@ -506,8 +508,6 @@ window.onload = function() {
 
 
 // Star Rating Functions
-let currentRating = 0; // To store the selected star rating
-
 function highlightStars(index) {
     const stars = document.querySelectorAll('.stars .fa-star');
     stars.forEach((star, i) => {
@@ -534,24 +534,37 @@ function selectRating(rating) {
 
 // Reset stars when mouse leaves the star container
 function resetStars() {
-    const stars = document.querySelectorAll('.stars .fa-star');
-    stars.forEach(star => {
-        star.classList.remove('hovered');
-        if (!star.classList.contains('selected')) { // Only remove 'selected' if it wasn't the chosen rating
-            star.classList.remove('selected');
-        }
-    });
-    // Re-apply selected state if a rating is set
-    selectRating(currentRating);
+    if (currentRating === 0) {
+        const stars = document.querySelectorAll('.stars .fa-star');
+        stars.forEach(star => {
+            star.classList.remove('hovered', 'selected');
+        });
+    } else {
+        selectRating(currentRating); // Re-apply selected state if a rating is set
+    }
 }
 
+// Placeholder for feedback submission (requires backend)
+function submitFeedback() {
+    const feedbackText = document.getElementById('feedbackText').value;
 
-// --- Formspree Integration ---
-// This function will handle the form submission using fetch to prevent page reload
+    if (currentRating === 0) {
+        alert('Please select a star rating.');
+        return;
+    }
 
-// No longer need the old submitFeedback() if using the form event listener
-// function submitFeedback() { ... } // This is removed or commented out
+    let feedbackMessage = `Rating: ${currentRating} stars.`;
+    if (feedbackText.trim() !== '') {
+        feedbackMessage += ` Description: "${feedbackText.trim()}"`;
+    }
 
+    alert(`Thank you for your feedback!\n${feedbackMessage}\n(Note: This is a demo, feedback is not actually sent)`);
+
+    // Reset form after "submission"
+    document.getElementById('feedbackText').value = '';
+    currentRating = 0;
+    resetStars(); // Clear selected stars
+}
 </script>
 </head>
 <body>
@@ -562,68 +575,23 @@ function resetStars() {
 
 <button type="button" onclick="loadMainContent()">Show Content</button>
 <button type="button" onclick="clearContent()">Clear Content</button>
-<button type="button" id="darkModeToggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+<button type="button" id="darkModeToggle">Toggle Dark Mode</button>
 
 <div class="feedback-section">
     <h2>Give Feedback</h2>
-    <form id="feedbackForm" action="YOUR_FORMSPREE_ENDPOINT" method="POST">
-        <div class="stars" onmouseout="resetStars()">
-            <i class="fa-solid fa-star" onmouseover="highlightStars(1)" onclick="selectRating(1)"></i>
-            <i class="fa-solid fa-star" onmouseover="highlightStars(2)" onclick="selectRating(2)"></i>
-            <i class="fa-solid fa-star" onmouseover="highlightStars(3)" onclick="selectRating(3)"></i>
-            <i class="fa-solid fa-star" onmouseover="highlightStars(4)" onclick="selectRating(4)"></i>
-            <i class="fa-solid fa-star" onmouseover="highlightStars(5)" onclick="selectRating(5)"></i>
-        </div>
-        <input type="hidden" name="rating" id="feedbackRating" value="0"> <textarea id="feedbackText" name="feedback_message" placeholder="Optional: Tell us more about your experience..."></textarea> <button type="submit">Submit Feedback</button> </form>
+    <div class="stars" onmouseout="resetStars()">
+        <i class="fa-solid fa-star" onmouseover="highlightStars(1)" onclick="selectRating(1)"></i>
+        <i class="fa-solid fa-star" onmouseover="highlightStars(2)" onclick="selectRating(2)"></i>
+        <i class="fa-solid fa-star" onmouseover="highlightStars(3)" onclick="selectRating(3)"></i>
+        <i class="fa-solid fa-star" onmouseover="highlightStars(4)" onclick="selectRating(4)"></i>
+        <i class="fa-solid fa star" onmouseover="highlightStars(5)" onclick="selectRating(5)"></i>
+    </div>
+    <textarea id="feedbackText" placeholder="Optional: Tell us more about your experience..."></textarea>
+    <button type="button" onclick="submitFeedback()">Submit Feedback</button>
 </div>
 
-<p>@2025----------Harshj58----------WEBLITE</p>
+<p>@2025--------------------------Harshj58--------------------------WEBLITE</p>
 <a href="https://help-page-pied.vercel.app/">HELP</a>
 
-<script>
-    // Moved star rating functions and dark mode toggle to the head for better organization
-    // The previous script block is now where Formspree submission logic lives.
-
-    // --- Formspree Submission Logic ---
-    const feedbackForm = document.getElementById('feedbackForm');
-    feedbackForm.addEventListener('submit', async function(event) {
-        event.preventDefault(); // Prevent the default form submission (page reload)
-
-        const form = event.target;
-        const formData = new FormData(form);
-
-        // 'rating' is already included via the hidden input field
-
-        try {
-            const response = await fetch(form.action, {
-                method: form.method,
-                body: formData,
-                headers: {
-                    'Accept': 'application/json' // Important for Formspree to return JSON
-                }
-            });
-
-            if (response.ok) {
-                alert('Feedback sent successfully! Thank you.');
-                // Clear the form after successful submission
-                document.getElementById('feedbackText').value = '';
-                currentRating = 0; // Reset rating
-                selectRating(0); // Clear visual stars (call selectRating with 0)
-                document.getElementById('feedbackRating').value = 0; // Reset hidden rating value
-            } else {
-                const data = await response.json();
-                if (data.errors) {
-                    alert('Error sending feedback: ' + data.errors.map(e => e.message).join(', '));
-                } else {
-                    alert('Error sending feedback. Please try again.');
-                }
-            }
-        } catch (error) {
-            console.error('Network or submission error:', error);
-            alert('An error occurred. Please check your internet connection and try again.');
-        }
-    });
-
-</script>
 </body>
 </html>
