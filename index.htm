@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shorcuteez</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap'); /* Adding a modern font */
 
         body {
@@ -27,7 +28,7 @@
         }
         body.dark-mode .search-container,
         body.dark-mode #contentArea,
-        body.dark-mode .feedback-section { /* Added feedback-section */
+        body.dark-mode .feedback-section {
             background-color: #3a3a3a; /* Darker container background */
             box-shadow: 0 4px 15px rgba(0,0,0,0.5); /* More prominent shadow in dark mode */
         }
@@ -43,7 +44,7 @@
             background-color: #666; /* Dark mode button hover */
         }
         body.dark-mode #contentArea h1,
-        body.dark-mode .feedback-section h2 { /* Added feedback-section h2 */
+        body.dark-mode .feedback-section h2 {
             color: #FF6B6B; /* Brighter red for dark mode title */
         }
         body.dark-mode #contentArea h3 {
@@ -85,7 +86,7 @@
         }
         body.dark-mode > p,
         body.dark-mode > a[href="https://help-page-pied.vercel.app/"],
-        body.dark-mode .feedback-section textarea { /* Added textarea for dark mode */
+        body.dark-mode .feedback-section textarea {
             color: #b0b0b0; /* Lighter color for footer text and textarea in dark mode */
         }
         body.dark-mode .feedback-section textarea {
@@ -113,6 +114,9 @@
             border-radius: 12px; /* More rounded corners */
             box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Softer, larger shadow */
             margin-bottom: 30px; /* More space below search */
+            display: flex; /* Use flexbox for alignment */
+            align-items: center; /* Vertically align items */
+            justify-content: center; /* Horizontally center items */
             transition: background-color 0.5s ease, box-shadow 0.5s ease;
         }
         .search-container input[type="search"] {
@@ -361,6 +365,12 @@
         .stars .fa-star.selected {
             color: #FFD700; /* Gold color for selected/hovered stars */
         }
+        #noResultsMessage {
+            color: #dc3545; /* Red color for no results message */
+            font-weight: bold;
+            margin-top: 20px;
+            display: none; /* Hidden by default */
+        }
     </style>
 
 <script>
@@ -371,117 +381,121 @@ function clearContent() {
   document.getElementById("contentArea").innerHTML = `
     <p id="initialMessage">Click "Show Content" to see the favourites!</p>
   `; // Re-add the initial message after clearing
+  document.getElementById('noResultsMessage').style.display = 'none'; // Hide no results message
 }
 
 // Function to load the "main page" content
 function loadMainContent() {
   document.getElementById("contentArea").innerHTML = `
-    <h1 style="color:red; ">Shorcuteez</h1> <h3 id="demo">Everyone's favourites</h3>
+    <h1 style="color:red;">Shorcuteez</h1>
+    <h3 id="demo">Everyone's favourites</h3>
     <hr>
-    <p>Youtube</p>
-    <a href="http://www.youtube.com/" >http://www.youtube.com/</a> <p>W3 SCHOOLS</p>
-    <a href="https://www.w3schools.com/" >https://www.w3schools.com/</a>
-    <p>Google</p>
-    <a href="https://www.google.com/" >https://www.google.com/</a>
- 	<p>Softonic</p>
-	<a href="https://www.softonic.com" >https://www.softonic.com/</a>
-	<p>Microsoft</p>
-	<a href="https://www.microsoft.com" >https://www.microsoft.com</a>
-	<p>ChatGPT</p>
-	<a href="https://openai.com/chatgpt/overview/" >https://openai.com/chatgpt/overview/</a>
-	<p>Gemini</p>
-	<a href="https://gemini.google.com/app" >https://gemini.google.com/app</a>
-	<p>DeepSeek R1<p>
-	<a href="https://deepseek.com/en" >https://deepseek.com/en</a>
-	<p>GitHub</p>
+    <p id="youtube-title">Youtube</p>
+    <a href="http://www.youtube.com/">http://www.youtube.com/</a>
+    <p id="w3schools-title">W3 SCHOOLS</p>
+    <a href="https://www.w3schools.com/">https://www.w3schools.com/</a>
+    <p id="google-title">Google</p>
+    <a href="https://www.google.com/">https://www.google.com/</a>
+ 	<p id="softonic-title">Softonic</p>
+	<a href="https://www.softonic.com">https://www.softonic.com/</a>
+	<p id="microsoft-title">Microsoft</p>
+	<a href="https://www.microsoft.com">https://www.microsoft.com</a>
+	<p id="chatgpt-title">ChatGPT</p>
+	<a href="https://openai.com/chatgpt/overview/">https://openai.com/chatgpt/overview/</a>
+	<p id="gemini-title">Gemini</p>
+	<a href="https://gemini.google.com/app">https://gemini.google.com/app</a>
+	<p id="deepseek-title">DeepSeek R1</p>
+	<a href="https://deepseek.com/en">https://deepseek.com/en</a>
+	<p id="github-title">GitHub</p>
  	<a href="https://www.github.com">https://www.github.com/</a>
-	<p>Wikipedia</p>
-	<a href="https://www.Wikipedia.org" >https://www.Wikipedia.org/</a>
-	<p>Yahoo</p>
-	<a href="https://www.yahoo.com" >https://www.yahoo.com/</a>
-	<p>Yandex Search Engine</p>
-	<a href="https://www.yandex.ru" >https://www.yandex.ru/</a>
-	<p>DuckDuckGo</p>
-	<a href="https://www.duckduckgo.com" >https://www.duckduckgo.com/</a>
-	<p>OpenAI</p>
-	<a href="https://www.openai.com" >https://www.openai.com/</a>
-	<p>Facebook</p>
-	<a href="https://www.facebook.com" >https://www.facebook.com/</a>
-	<p>Instagram</p>
-	<a href="https://www.instagram.com" >https://www.instagram.com/</a>
- 	<p>X</p>
-	<a href="https://www.x.com" >https://www.x.com/</a>
-	<p>WhatsApp</p>
-	<a href="https://www.whatsapp.com" >https://www.whatsapp.com/</a>
-	<p>Reddit</p>
-	<a href="https://www.reddit.com" >https://www.reddit.com/</a>
-	<p>TikTok(If its Banned in your country i strongly advise not to use it.)</p>
-	<a href="https://www.tiktok.com" >https://www.tiktok.com/</a>
-	<p>Linkedin</p>
-	<a href="https://www.linkedin.com" >https://www.linkedin.com/</a>
-	<p>VK search engine(russian)</p>
-	<a href="https://www.vk.com" >https://www.vk.com/</a>
-	<p>Telegram</p>
-	<a href="https://www.telegram.com" >https://www.telegram.com/</a>
-	<p>Discord</p>
-	<a href="https://www.discord.com" >https://www.discord.com/</a>
-	<p>Pinterest</p>
-	<a href="https://www.pinterest.com" >https://www.pinterest.com/</a>
-	<p>Tumblr</p>
-	<a href="https://www.tumblr.com" >https://www.tumblr.com/</a>
-	<p>Netflix</p>
-	<a href="https://www.netflix.com" >https://www.netflix.com/</a>
-	<p>Live</p>
-	<a href="https://www.live.com" >https://www.live.com/</a>
-	<p>Microsoft 365 & Cloud Services</p>
-	<a href="https://www.microsoftonline.com" >https://www.microsoftonline.com/</a>
-	<p>Baidu search engine(chinese)
-	<a href="https://www.baidu.com" >https://www.baidu.com/</a>
-	<p>Temu</p>
-	<a href="https://www.temu.com" >https://www.temu.com</a>
-	<p>MS Office Online</p>
-	<a href="https://www.office.com" >https://www.office.com/</a>
-	<p>Apple</p>
-	<a href="https://www.apple.com" >https://www.apple.com/</a>
-	<p>Weather Forcast</p>
-	<a href="https://www.weather.com" >https://www.weather.com/</a>
-	<p>Canva</p>
-	<a href="https://www.canva.com" >https://www.canva.com/</a>
-	<p>Vercel</p>
+	<p id="wikipedia-title">Wikipedia</p>
+	<a href="https://www.Wikipedia.org">https://www.Wikipedia.org/</a>
+	<p id="yahoo-title">Yahoo</p>
+	<a href="https://www.yahoo.com">https://www.yahoo.com/</a>
+	<p id="yandex-title">Yandex Search Engine</p>
+	<a href="https://www.yandex.ru">https://www.yandex.ru/</a>
+	<p id="duckduckgo-title">DuckDuckGo</p>
+	<a href="https://www.duckduckgo.com">https://www.duckduckgo.com/</a>
+	<p id="openai-title">OpenAI</p>
+	<a href="https://www.openai.com">https://www.openai.com/</a>
+	<p id="facebook-title">Facebook</p>
+	<a href="https://www.facebook.com">https://www.facebook.com/</a>
+	<p id="instagram-title">Instagram</p>
+	<a href="https://www.instagram.com">https://www.instagram.com/</a>
+ 	<p id="x-title">X</p>
+	<a href="https://www.x.com">https://www.x.com/</a>
+	<p id="whatsapp-title">WhatsApp</p>
+	<a href="https://www.whatsapp.com">https://www.whatsapp.com/</a>
+	<p id="reddit-title">Reddit</p>
+	<a href="https://www.reddit.com">https://www.reddit.com/</a>
+	<p id="tiktok-title">TikTok(If its Banned in your country i strongly advise not to use it.)</p>
+	<a href="https://www.tiktok.com">https://www.tiktok.com/</a>
+	<p id="linkedin-title">Linkedin</p>
+	<a href="https://www.linkedin.com">https://www.linkedin.com/</a>
+	<p id="vk-title">VK search engine(russian)</p>
+	<a href="https://www.vk.com">https://www.vk.com/</a>
+	<p id="telegram-title">Telegram</p>
+	<a href="https://www.telegram.com">https://www.telegram.com/</a>
+	<p id="discord-title">Discord</p>
+	<a href="https://www.discord.com">https://www.discord.com/</a>
+	<p id="pinterest-title">Pinterest</p>
+	<a href="https://www.pinterest.com">https://www.pinterest.com/</a>
+	<p id="tumblr-title">Tumblr</p>
+	<a href="https://www.tumblr.com">https://www.tumblr.com/</a>
+	<p id="netflix-title">Netflix</p>
+	<a href="https://www.netflix.com">https://www.netflix.com/</a>
+	<p id="live-title">Live</p>
+	<a href="https://www.live.com">https://www.live.com/</a>
+	<p id="microsoft365-title">Microsoft 365 & Cloud Services</p>
+	<a href="https://www.microsoftonline.com">https://www.microsoftonline.com/</a>
+	<p id="baidu-title">Baidu search engine(chinese)</p>
+	<a href="https://www.baidu.com">https://www.baidu.com/</a>
+	<p id="temu-title">Temu</p>
+	<a href="https://www.temu.com">https://www.temu.com</a>
+	<p id="msoffice-title">MS Office Online</p>
+	<a href="https://www.office.com">https://www.office.com/</a>
+	<p id="apple-title">Apple</p>
+	<a href="https://www.apple.com">https://www.apple.com/</a>
+	<p id="weather-title">Weather Forcast</p>
+	<a href="https://www.weather.com">https://www.weather.com/</a>
+	<p id="canva-title">Canva</p>
+	<a href="https://www.canva.com">https://www.canva.com/</a>
+	<p id="vercel-title">Vercel</p>
 	<a href="https://www.vercel.com/">https://www.vercel.com/</a>
-    <p>Spotify</p>
-	<a href="https://www.spotify.com" >https://www.spotify.com/</a>
+    <p id="spotify-title">Spotify</p>
+	<a href="https://www.spotify.com">https://www.spotify.com/</a>
 
 	<hr>
 	<h1>Our Games</h1>
-	<p>Tic Tac Toe</p>
+	<p id="tictactoe-title">Tic Tac Toe</p>
 	<a href="https://mygame-xi-ten.vercel.app/">https://mygame-xi-ten.vercel.app/</a>
-	<p>Snake Game</p>
+	<p id="snakegame-title">Snake Game</p>
 	<a href="https://snake-game-lime-seven.vercel.app/">https://snake-game-lime-seven.vercel.app/</a>
-	<p>Dungeon Crawler</p>
+	<p id="dungeon-title">Dungeon Crawler</p>
 	<a href="https://dugeon-crawler.vercel.app/">https://dugeon-crawler.vercel.app/</a>
 	<hr>
 	<h1>Gaming Websites</h1>
-	<p>Roblox</p>
-	<a href="https://www.roblox.com" >https://www.roblox.com/</a>
-	<p>Steam</p>
-	<a href="https://www.steampowered.com" >https://www.steampowered.com/</a>
-	<p>Poki Games</p>
-	<a href="https://www.poki.com" >https://www.poki.com/</a>
-	<p>Xbox</p>
-	<a href="https://www.xbox.com" >https://www.xbox.com/</a>
-	<p>Playstation</p>
-	<a href="https://www.playstation.com" >https://www.playstation.com/</a>
-	<p>Epic Games Store</p>
-	<a href="https://www.epicgames.com" >https://www.epicgames.com/</a>
-	<p>Nintendo</p>
-	<a href="https://www.nintendo.com" >https://www.nintendo.com/</a>
-	<p>Minecraft</p>
-	<a href="https://www.minecraft.net" >https://www.minecraft.net/</a>
+	<p id="roblox-title">Roblox</p>
+	<a href="https://www.roblox.com">https://www.roblox.com/</a>
+	<p id="steam-title">Steam</p>
+	<a href="https://www.steampowered.com">https://www.steampowered.com/</a>
+	<p id="poki-title">Poki Games</p>
+	<a href="https://www.poki.com">https://www.poki.com/</a>
+	<p id="xbox-title">Xbox</p>
+	<a href="https://www.xbox.com">https://www.xbox.com/</a>
+	<p id="playstation-title">Playstation</p>
+	<a href="https://www.playstation.com">https://www.playstation.com/</a>
+	<p id="epicgames-title">Epic Games Store</p>
+	<a href="https://www.epicgames.com">https://www.epicgames.com/</a>
+	<p id="nintendo-title">Nintendo</p>
+	<a href="https://www.nintendo.com">https://www.nintendo.com/</a>
+	<p id="minecraft-title">Minecraft</p>
+	<a href="https://www.minecraft.net">https://www.minecraft.net/</a>
 	<hr>
 	<h3>THANKS - YOU</h3>
-
+    <p id="noResultsMessage">No matching websites found.</p>
   `;
+  document.getElementById('initialMessage').style.display = 'none'; // Hide initial message
 }
 
 // Dark Mode Toggle Function
@@ -544,33 +558,111 @@ function resetStars() {
     }
 }
 
-// Placeholder for feedback submission (requires backend)
-function submitFeedback() {
-    const feedbackText = document.getElementById('feedbackText').value;
+// Formspree Submission Logic (Placeholder - replace YOUR_FORMSPREE_ENDPOINT)
+const feedbackForm = document.getElementById('feedbackForm');
+if (feedbackForm) { // Ensure form exists before adding listener
+    feedbackForm.addEventListener('submit', async function(event) {
+        event.preventDefault(); // Prevent the default form submission (page reload)
 
-    if (currentRating === 0) {
-        alert('Please select a star rating.');
-        return;
+        const form = event.target;
+        const formData = new FormData(form);
+
+        try {
+            const response = await fetch(form.action, {
+                method: form.method,
+                body: formData,
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+
+            if (response.ok) {
+                alert('Feedback sent successfully! Thank you.');
+                document.getElementById('feedbackText').value = '';
+                currentRating = 0;
+                selectRating(0);
+                document.getElementById('feedbackRating').value = 0;
+            } else {
+                const data = await response.json();
+                if (data.errors) {
+                    alert('Error sending feedback: ' + data.errors.map(e => e.message).join(', '));
+                } else {
+                    alert('Error sending feedback. Please try again.');
+                }
+            }
+        } catch (error) {
+            console.error('Network or submission error:', error);
+            alert('An error occurred. Please check your internet connection and try again.');
+        }
+    });
+}
+
+// New Search Functionality
+function searchWebsites() {
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+    const contentArea = document.getElementById('contentArea');
+    const links = contentArea.querySelectorAll('a');
+    const paragraphs = contentArea.querySelectorAll('p:not(#initialMessage):not(#noResultsMessage)');
+    const headings = contentArea.querySelectorAll('h1, h3, hr'); // Include all headings and HRs
+
+    let found = false;
+
+    // First, hide all relevant elements
+    links.forEach(link => link.style.display = 'none');
+    paragraphs.forEach(p => p.style.display = 'none');
+    headings.forEach(h => h.style.display = 'none'); // Hide all headings and HRs
+
+    // Always ensure main titles are hidden during a search
+    const mainTitle = document.querySelector('#contentArea h1');
+    const subTitle = document.querySelector('#contentArea h3');
+    if (mainTitle) mainTitle.style.display = 'none';
+    if (subTitle) subTitle.style.display = 'none';
+
+    // Show or hide based on search term
+    for (let i = 0; i < links.length; i++) {
+        const link = links[i];
+        const linkText = link.textContent.toLowerCase();
+        const linkHref = link.href.toLowerCase();
+
+        // Check if the link text or its URL contains the search term
+        if (linkText.includes(searchTerm) || linkHref.includes(searchTerm)) {
+            link.style.display = 'block'; // Show the link
+
+            // Also show the preceding paragraph (if it exists)
+            let prevSibling = link.previousElementSibling;
+            while (prevSibling) {
+                if (prevSibling.tagName === 'P') {
+                    prevSibling.style.display = 'block';
+                    break;
+                }
+                prevSibling = prevSibling.previousElementSibling;
+            }
+            // Optionally show any relevant headings/HRs if a result is found within their section
+            // This part can be more complex to implement perfectly for all cases,
+            // but for simple display, showing the closest P tag is sufficient.
+            found = true;
+        }
     }
 
-    let feedbackMessage = `Rating: ${currentRating} stars.`;
-    if (feedbackText.trim() !== '') {
-        feedbackMessage += ` Description: "${feedbackText.trim()}"`;
+    const noResultsMessage = document.getElementById('noResultsMessage');
+    if (found) {
+        noResultsMessage.style.display = 'none';
+    } else {
+        noResultsMessage.style.display = 'block';
     }
-
-    alert(`Thank you for your feedback!\n${feedbackMessage}\n(Note: This is a demo, feedback is not actually sent)`);
-
-    // Reset form after "submission"
-    document.getElementById('feedbackText').value = '';
-    currentRating = 0;
-    resetStars(); // Clear selected stars
 }
 </script>
 </head>
 <body>
 
+<div class="search-container">
+    <input type="search" id="searchInput" placeholder="Search websites..." onkeyup="if(event.keyCode === 13) searchWebsites()">
+    <button onclick="searchWebsites()">Search</button>
+</div>
+
 <div id="contentArea">
     <p id="initialMessage">Click "Show Content" to see the favourites!</p>
+    <p id="noResultsMessage">No matching websites found.</p>
 </div>
 
 <button type="button" onclick="loadMainContent()">Show Content</button>
@@ -579,15 +671,18 @@ function submitFeedback() {
 
 <div class="feedback-section">
     <h2>Give Feedback</h2>
-    <div class="stars" onmouseout="resetStars()">
-        <i class="fa-solid fa-star" onmouseover="highlightStars(1)" onclick="selectRating(1)"></i>
-        <i class="fa-solid fa-star" onmouseover="highlightStars(2)" onclick="selectRating(2)"></i>
-        <i class="fa-solid fa-star" onmouseover="highlightStars(3)" onclick="selectRating(3)"></i>
-        <i class="fa-solid fa-star" onmouseover="highlightStars(4)" onclick="selectRating(4)"></i>
-        <i class="fa-solid fa star" onmouseover="highlightStars(5)" onclick="selectRating(5)"></i>
-    </div>
-    <textarea id="feedbackText" placeholder="Optional: Tell us more about your experience..."></textarea>
-    <button type="button" onclick="submitFeedback()">Submit Feedback</button>
+    <form id="feedbackForm" action="YOUR_FORMSPREE_ENDPOINT" method="POST">
+        <div class="stars" onmouseout="resetStars()">
+            <i class="fa-solid fa-star" onmouseover="highlightStars(1)" onclick="selectRating(1)"></i>
+            <i class="fa-solid fa-star" onmouseover="highlightStars(2)" onclick="selectRating(2)"></i>
+            <i class="fa-solid fa-star" onmouseover="highlightStars(3)" onclick="selectRating(3)"></i>
+            <i class="fa-solid fa-star" onmouseover="highlightStars(4)" onclick="selectRating(4)"></i>
+            <i class="fa-solid fa-star" onmouseover="highlightStars(5)" onclick="selectRating(5)"></i>
+        </div>
+        <input type="hidden" name="rating" id="feedbackRating" value="0">
+        <textarea id="feedbackText" name="feedback_message" placeholder="Optional: Tell us more about your experience..."></textarea>
+        <button type="submit">Submit Feedback</button>
+    </form>
 </div>
 
 <p>@2025--------------------------Harshj58--------------------------WEBLITE</p>
