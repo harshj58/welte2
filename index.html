@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Shorcuteez</title>
-    <style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap'); /* Adding a modern font */
 
         body {
@@ -26,7 +26,8 @@
             color: #f0f0f0; /* Light text */
         }
         body.dark-mode .search-container,
-        body.dark-mode #contentArea {
+        body.dark-mode #contentArea,
+        body.dark-mode .feedback-section { /* Added feedback-section */
             background-color: #3a3a3a; /* Darker container background */
             box-shadow: 0 4px 15px rgba(0,0,0,0.5); /* More prominent shadow in dark mode */
         }
@@ -41,7 +42,8 @@
         body.dark-mode .search-container button:hover {
             background-color: #666; /* Dark mode button hover */
         }
-        body.dark-mode #contentArea h1 {
+        body.dark-mode #contentArea h1,
+        body.dark-mode .feedback-section h2 { /* Added feedback-section h2 */
             color: #FF6B6B; /* Brighter red for dark mode title */
         }
         body.dark-mode #contentArea h3 {
@@ -82,8 +84,26 @@
             background-color: #e0e0e0;
         }
         body.dark-mode > p,
-        body.dark-mode > a[href="https://help-page-pied.vercel.app/"] {
-            color: #b0b0b0; /* Lighter color for footer text in dark mode */
+        body.dark-mode > a[href="https://help-page-pied.vercel.app/"],
+        body.dark-mode .feedback-section textarea { /* Added textarea for dark mode */
+            color: #b0b0b0; /* Lighter color for footer text and textarea in dark mode */
+        }
+        body.dark-mode .feedback-section textarea {
+            background-color: #4a4a4a;
+            border-color: #555;
+        }
+        body.dark-mode .feedback-section button {
+            background-color: #1a73e8; /* Blue for submit button in dark mode */
+            color: #f0f0f0;
+        }
+        body.dark-mode .feedback-section button:hover {
+            background-color: #0c5cb2;
+        }
+        body.dark-mode .stars .fa-star {
+            color: #666; /* Default star color in dark mode */
+        }
+        body.dark-mode .stars .fa-star.selected {
+            color: #FFD700; /* Selected star color in dark mode */
         }
 
 
@@ -274,9 +294,78 @@
         #contentArea a[href*="nintendo.com"] { color: #E60012; }
         #contentArea a[href*="minecraft.net"] { color: #3C8528; } /* Minecraft green */
 
+        /* Feedback Section Styles */
+        .feedback-section {
+            background-color: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            width: 85%;
+            max-width: 650px;
+            text-align: center;
+            margin-top: 40px; /* More space above feedback section */
+            transition: background-color 0.5s ease, box-shadow 0.5s ease;
+        }
+
+        .feedback-section h2 {
+            color: #D32F2F; /* Matching main title color */
+            font-size: 2em;
+            margin-bottom: 20px;
+            transition: color 0.5s ease;
+        }
+
+        .feedback-section textarea {
+            width: calc(100% - 24px); /* Full width minus padding */
+            padding: 12px;
+            border: 1px solid #c0e0eb;
+            border-radius: 6px;
+            min-height: 100px; /* Minimum height for textarea */
+            font-family: 'Poppins', sans-serif;
+            font-size: 1em;
+            margin-bottom: 20px;
+            box-sizing: border-box; /* Include padding in width */
+            resize: vertical; /* Allow vertical resizing */
+            transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
+        }
+
+        .feedback-section button {
+            background-color: #1a73e8; /* Blue for submit button */
+            color: white;
+            padding: 12px 30px;
+            font-size: 18px;
+            border-radius: 6px;
+            cursor: pointer;
+            border: none;
+            transition: background-color 0.3s ease, transform 0.2s ease, color 0.5s ease;
+        }
+
+        .feedback-section button:hover {
+            background-color: #0c5cb2;
+            transform: translateY(-2px);
+        }
+
+        /* Star Rating Styles */
+        .stars {
+            font-size: 2.2em; /* Larger stars */
+            color: #ccc; /* Default grey for unselected stars */
+            cursor: pointer;
+            margin-bottom: 15px; /* Space below stars */
+        }
+
+        .stars .fa-star {
+            margin: 0 3px; /* Space between stars */
+            transition: color 0.2s ease;
+        }
+
+        .stars .fa-star.hovered,
+        .stars .fa-star.selected {
+            color: #FFD700; /* Gold color for selected/hovered stars */
+        }
     </style>
 
 <script>
+let currentRating = 0; // To store the selected star rating
+
 // Function to clear the content area
 function clearContent() {
   document.getElementById("contentArea").innerHTML = `
@@ -399,6 +488,64 @@ function loadMainContent() {
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
 }
+
+// Star Rating Functions
+function highlightStars(index) {
+    const stars = document.querySelectorAll('.stars .fa-star');
+    stars.forEach((star, i) => {
+        if (i < index) {
+            star.classList.add('hovered');
+        } else {
+            star.classList.remove('hovered');
+        }
+    });
+}
+
+function selectRating(rating) {
+    currentRating = rating;
+    const stars = document.querySelectorAll('.stars .fa-star');
+    stars.forEach((star, i) => {
+        if (i < rating) {
+            star.classList.add('selected');
+        } else {
+            star.classList.remove('selected');
+        }
+    });
+}
+
+// Reset stars when mouse leaves the star container
+function resetStars() {
+    if (currentRating === 0) {
+        const stars = document.querySelectorAll('.stars .fa-star');
+        stars.forEach(star => {
+            star.classList.remove('hovered', 'selected');
+        });
+    } else {
+        selectRating(currentRating); // Re-apply selected state if a rating is set
+    }
+}
+
+// Placeholder for feedback submission (requires backend)
+function submitFeedback() {
+    const feedbackText = document.getElementById('feedbackText').value;
+
+    if (currentRating === 0) {
+        alert('Please select a star rating.');
+        return;
+    }
+
+    let feedbackMessage = `Rating: ${currentRating} stars.`;
+    if (feedbackText.trim() !== '') {
+        feedbackMessage += ` Description: "${feedbackText.trim()}"`;
+    }
+
+    alert(`Thank you for your feedback!\n${feedbackMessage}\n(Note: This is a demo, feedback is not actually sent)`);
+
+    // Reset form after "submission"
+    document.getElementById('feedbackText').value = '';
+    currentRating = 0;
+    resetStars(); // Clear selected stars
+}
 </script>
 </head>
 <body>
@@ -410,6 +557,20 @@ function toggleDarkMode() {
 <button type="button" onclick="loadMainContent()">Show Content</button>
 <button type="button" onclick="clearContent()">Clear Content</button>
 <button type="button" id="darkModeToggle" onclick="toggleDarkMode()">Toggle Dark Mode</button>
+
+<div class="feedback-section">
+    <h2>Give Feedback</h2>
+    <div class="stars" onmouseout="resetStars()">
+        <i class="fa-solid fa-star" onmouseover="highlightStars(1)" onclick="selectRating(1)"></i>
+        <i class="fa-solid fa-star" onmouseover="highlightStars(2)" onclick="selectRating(2)"></i>
+        <i class="fa-solid fa-star" onmouseover="highlightStars(3)" onclick="selectRating(3)"></i>
+        <i class="fa-solid fa-star" onmouseover="highlightStars(4)" onclick="selectRating(4)"></i>
+        <i class="fa-solid fa star" onmouseover="highlightStars(5)" onclick="selectRating(5)"></i>
+    </div>
+    <textarea id="feedbackText" placeholder="Optional: Tell us more about your experience..."></textarea>
+    <button type="button" onclick="submitFeedback()">Submit Feedback</button>
+</div>
+
 <p>@2025--------------------------Harshj58--------------------------WEBLITE</p>
 <a href="https://help-page-pied.vercel.app/">HELP</a>
 
