@@ -415,118 +415,148 @@ function clearContent() {
   document.getElementById('noResultsMessage').style.display = 'none'; // Hide no results message
 }
 
+// Data structure for the content to make search easier
+const contentData = [
+    { type: 'heading1', id: 'mainTitle', text: 'Shorcuteez' },
+    { type: 'heading3', id: 'subTitle', text: 'Everyone\'s favourites' },
+    { type: 'hr', id: 'hr1' },
+    { type: 'paragraph', id: 'youtube-title', text: 'Youtube' },
+    { type: 'link', href: 'http://www.youtube.com/', text: 'http://www.youtube.com/' },
+    { type: 'paragraph', id: 'w3schools-title', text: 'W3 SCHOOLS' },
+    { type: 'link', href: 'https://www.w3schools.com/', text: 'https://www.w3schools.com/' },
+    { type: 'paragraph', id: 'google-title', text: 'Google' },
+    { type: 'link', href: 'https://www.google.com/', text: 'https://www.google.com/' },
+    { type: 'paragraph', id: 'softonic-title', text: 'Softonic' },
+    { type: 'link', href: 'https://www.softonic.com', text: 'https://www.softonic.com/' },
+    { type: 'paragraph', id: 'microsoft-title', text: 'Microsoft' },
+    { type: 'link', href: 'https://www.microsoft.com', text: 'https://www.microsoft.com' },
+    { type: 'paragraph', id: 'chatgpt-title', text: 'ChatGPT' },
+    { type: 'link', href: 'https://openai.com/chatgpt/overview/', text: 'https://openai.com/chatgpt/overview/' },
+    { type: 'paragraph', id: 'gemini-title', text: 'Gemini' },
+    { type: 'link', href: 'https://gemini.google.com/app', text: 'https://gemini.google.com/app' },
+    { type: 'paragraph', id: 'deepseek-title', text: 'DeepSeek R1' },
+    { type: 'link', href: 'https://deepseek.com/en', text: 'https://deepseek.com/en' },
+    { type: 'paragraph', id: 'github-title', text: 'GitHub' },
+    { type: 'link', href: 'https://www.github.com', text: 'https://www.github.com/' },
+    { type: 'paragraph', id: 'wikipedia-title', text: 'Wikipedia' },
+    { type: 'link', href: 'https://www.Wikipedia.org', text: 'https://www.Wikipedia.org/' },
+    { type: 'paragraph', id: 'yahoo-title', text: 'Yahoo' },
+    { type: 'link', href: 'https://www.yahoo.com', text: 'https://www.yahoo.com/' },
+    { type: 'paragraph', id: 'yandex-title', text: 'Yandex Search Engine' },
+    { type: 'link', href: 'https://www.yandex.ru', text: 'https://www.yandex.ru/' },
+    { type: 'paragraph', id: 'duckduckgo-title', text: 'DuckDuckGo' },
+    { type: 'link', href: 'https://www.duckduckgo.com', text: 'https://www.duckduckgo.com/' },
+    { type: 'paragraph', id: 'openai-title', text: 'OpenAI' },
+    { type: 'link', href: 'https://www.openai.com', text: 'https://www.openai.com/' },
+    { type: 'paragraph', id: 'facebook-title', text: 'Facebook' },
+    { type: 'link', href: 'https://www.facebook.com', text: 'https://www.facebook.com/' },
+    { type: 'paragraph', id: 'instagram-title', text: 'Instagram' },
+    { type: 'link', href: 'https://www.instagram.com', text: 'https://www.instagram.com/' },
+    { type: 'paragraph', id: 'x-title', text: 'X' },
+    { type: 'link', href: 'https://www.x.com', text: 'https://www.x.com/' },
+    { type: 'paragraph', id: 'whatsapp-title', text: 'WhatsApp' },
+    { type: 'link', href: 'https://www.whatsapp.com', text: 'https://www.whatsapp.com/' },
+    { type: 'paragraph', id: 'reddit-title', text: 'Reddit' },
+    { type: 'link', href: 'https://www.reddit.com', text: 'https://www.reddit.com/' },
+    { type: 'paragraph', id: 'tiktok-title', text: 'TikTok(If its Banned in your country i strongly advise not to use it.)' },
+    { type: 'link', href: 'https://www.tiktok.com', text: 'https://www.tiktok.com/' },
+    { type: 'paragraph', id: 'linkedin-title', text: 'Linkedin' },
+    { type: 'link', href: 'https://www.linkedin.com', text: 'https://www.linkedin.com/' },
+    { type: 'paragraph', id: 'vk-title', text: 'VK search engine(russian)' },
+    { type: 'link', href: 'https://www.vk.com', text: 'https://www.vk.com/' },
+    { type: 'paragraph', id: 'telegram-title', text: 'Telegram' },
+    { type: 'link', href: 'https://www.telegram.com', text: 'https://www.telegram.com/' },
+    { type: 'paragraph', id: 'discord-title', text: 'Discord' },
+    { type: 'link', href: 'https://www.discord.com', text: 'https://www.discord.com/' },
+    { type: 'paragraph', id: 'pinterest-title', text: 'Pinterest' },
+    { type: 'link', href: 'https://www.pinterest.com', text: 'https://www.pinterest.com/' },
+    { type: 'paragraph', id: 'tumblr-title', text: 'Tumblr' },
+    { type: 'link', href: 'https://www.tumblr.com', text: 'https://www.tumblr.com/' },
+    { type: 'paragraph', id: 'netflix-title', text: 'Netflix' },
+    { type: 'link', href: 'https://www.netflix.com', text: 'https://www.netflix.com/' },
+    { type: 'paragraph', id: 'live-title', text: 'Live' },
+    { type: 'link', href: 'https://www.live.com', text: 'https://www.live.com/' },
+    { type: 'paragraph', id: 'microsoft365-title', text: 'Microsoft 365 & Cloud Services' },
+    { type: 'link', href: 'https://www.microsoftonline.com', text: 'https://www.microsoftonline.com/' },
+    { type: 'paragraph', id: 'baidu-title', text: 'Baidu search engine(chinese)' },
+    { type: 'link', href: 'https://www.baidu.com', text: 'https://www.baidu.com/' },
+    { type: 'paragraph', id: 'temu-title', text: 'Temu' },
+    { type: 'link', href: 'https://www.temu.com', text: 'https://www.temu.com' },
+    { type: 'paragraph', id: 'msoffice-title', text: 'MS Office Online' },
+    { type: 'link', href: 'https://www.office.com', text: 'https://www.office.com/' },
+    { type: 'paragraph', id: 'apple-title', text: 'Apple' },
+    { type: 'link', href: 'https://www.apple.com', text: 'https://www.apple.com/' },
+    { type: 'paragraph', id: 'weather-title', text: 'Weather Forcast' },
+    { type: 'link', href: 'https://www.weather.com', text: 'https://www.weather.com/' },
+    { type: 'paragraph', id: 'canva-title', text: 'Canva' },
+    { type: 'link', href: 'https://www.canva.com', text: 'https://www.canva.com/' },
+    { type: 'paragraph', id: 'vercel-title', text: 'Vercel' },
+    { type: 'link', href: 'https://www.vercel.com/', text: 'https://www.vercel.com/' },
+    { type: 'paragraph', id: 'spotify-title', text: 'Spotify' },
+    { type: 'link', href: 'https://www.spotify.com', text: 'https://www.spotify.com/' },
+    
+    { type: 'hr', id: 'hr2' },
+    { type: 'heading1', id: 'gamesTitle', text: 'Our Games' },
+    { type: 'paragraph', id: 'tictactoe-title', text: 'Tic Tac Toe' },
+    { type: 'link', href: 'https://mygame-xi-ten.vercel.app/', text: 'https://mygame-xi-ten.vercel.app/' },
+    { type: 'paragraph', id: 'snakegame-title', text: 'Snake Game' },
+    { type: 'link', href: 'https://snake-game-lime-seven.vercel.app/', text: 'https://snake-game-lime-seven.vercel.app/' },
+    { type: 'paragraph', id: 'dungeon-title', text: 'Dungeon Crawler' },
+    { type: 'link', href: 'https://dugeon-crawler.vercel.app/', text: 'https://dugeon-crawler.vercel.app/' },
+    { type: 'hr', id: 'hr3' },
+    { type: 'heading1', id: 'gamingWebsitesTitle', text: 'Gaming Websites' },
+    { type: 'paragraph', id: 'roblox-title', text: 'Roblox' },
+    { type: 'link', href: 'https://www.roblox.com', text: 'https://www.roblox.com/' },
+    { type: 'paragraph', id: 'steam-title', text: 'Steam' },
+    { type: 'link', href: 'https://www.steampowered.com', text: 'https://www.steampowered.com/' },
+    { type: 'paragraph', id: 'poki-title', text: 'Poki Games' },
+    { type: 'link', href: 'https://www.poki.com', text: 'https://www.poki.com/' },
+    { type: 'paragraph', id: 'xbox-title', text: 'Xbox' },
+    { type: 'link', href: 'https://www.xbox.com', text: 'https://www.xbox.com/' },
+    { type: 'paragraph', id: 'playstation-title', text: 'Playstation' },
+    { type: 'link', href: 'https://www.playstation.com', text: 'https://www.playstation.com/' },
+    { type: 'paragraph', id: 'epicgames-title', text: 'Epic Games Store' },
+    { type: 'link', href: 'https://www.epicgames.com', text: 'https://www.epicgames.com/' },
+    { type: 'paragraph', id: 'nintendo-title', text: 'Nintendo' },
+    { type: 'link', href: 'https://www.nintendo.com', text: 'https://www.nintendo.com/' },
+    { type: 'paragraph', id: 'minecraft-title', text: 'Minecraft' },
+    { type: 'link', href: 'https://www.minecraft.net', text: 'https://www.minecraft.net/' },
+    { type: 'hr', id: 'hr4' },
+    { type: 'heading3', id: 'thanks-you', text: 'THANKS - YOU' }
+];
+
 // Function to load the "main page" content
 function loadMainContent() {
-  document.getElementById("contentArea").innerHTML = `
-    <h1 style="color:red;">Shorcuteez</h1>
-    <h3 id="demo">Everyone's favourites</h3>
-    <hr>
-    <p id="youtube-title">Youtube</p>
-    <a href="http://www.youtube.com/">http://www.youtube.com/</a>
-    <p id="w3schools-title">W3 SCHOOLS</p>
-    <a href="https://www.w3schools.com/">https://www.w3schools.com/</a>
-    <p id="google-title">Google</p>
-    <a href="https://www.google.com/">https://www.google.com/</a>
- 	<p id="softonic-title">Softonic</p>
-	<a href="https://www.softonic.com">https://www.softonic.com/</a>
-	<p id="microsoft-title">Microsoft</p>
-	<a href="https://www.microsoft.com">https://www.microsoft.com</a>
-	<p id="chatgpt-title">ChatGPT</p>
-	<a href="https://openai.com/chatgpt/overview/">https://openai.com/chatgpt/overview/</a>
-	<p id="gemini-title">Gemini</p>
-	<a href="https://gemini.google.com/app">https://gemini.google.com/app</a>
-	<p id="deepseek-title">DeepSeek R1</p>
-	<a href="https://deepseek.com/en">https://deepseek.com/en</a>
-	<p id="github-title">GitHub</p>
- 	<a href="https://www.github.com">https://www.github.com/</a>
-	<p id="wikipedia-title">Wikipedia</p>
-	<a href="https://www.Wikipedia.org">https://www.Wikipedia.org/</a>
-	<p id="yahoo-title">Yahoo</p>
-	<a href="https://www.yahoo.com">https://www.yahoo.com/</a>
-	<p id="yandex-title">Yandex Search Engine</p>
-	<a href="https://www.yandex.ru">https://www.yandex.ru/</a>
-	<p id="duckduckgo-title">DuckDuckGo</p>
-	<a href="https://www.duckduckgo.com">https://www.duckduckgo.com/</a>
-	<p id="openai-title">OpenAI</p>
-	<a href="https://www.openai.com">https://www.openai.com/</a>
-	<p id="facebook-title">Facebook</p>
-	<a href="https://www.facebook.com">https://www.facebook.com/</a>
-	<p id="instagram-title">Instagram</p>
-	<a href="https://www.instagram.com">https://www.instagram.com/</a>
- 	<p id="x-title">X</p>
-	<a href="https://www.x.com">https://www.x.com/</a>
-	<p id="whatsapp-title">WhatsApp</p>
-	<a href="https://www.whatsapp.com">https://www.whatsapp.com/</a>
-	<p id="reddit-title">Reddit</p>
-	<a href="https://www.reddit.com">https://www.reddit.com/</a>
-	<p id="tiktok-title">TikTok(If its Banned in your country i strongly advise not to use it.)</p>
-	<a href="https://www.tiktok.com">https://www.tiktok.com/</a>
-	<p id="linkedin-title">Linkedin</p>
-	<a href="https://www.linkedin.com">https://www.linkedin.com/</a>
-	<p id="vk-title">VK search engine(russian)</p>
-	<a href="https://www.vk.com">https://www.vk.com/</a>
-	<p id="telegram-title">Telegram</p>
-	<a href="https://www.telegram.com">https://www.telegram.com/</a>
-	<p id="discord-title">Discord</p>
-	<a href="https://www.discord.com">https://www.discord.com/</a>
-	<p id="pinterest-title">Pinterest</p>
-	<a href="https://www.pinterest.com">https://www.pinterest.com/</a>
-	<p id="tumblr-title">Tumblr</p>
-	<a href="https://www.tumblr.com">https://www.tumblr.com/</a>
-	<p id="netflix-title">Netflix</p>
-	<a href="https://www.netflix.com">https://www.netflix.com/</a>
-	<p id="live-title">Live</p>
-	<a href="https://www.live.com">https://www.live.com/</a>
-	<p id="microsoft365-title">Microsoft 365 & Cloud Services</p>
-	<a href="https://www.microsoftonline.com">https://www.microsoftonline.com/</a>
-	<p id="baidu-title">Baidu search engine(chinese)</p>
-	<a href="https://www.baidu.com">https://www.baidu.com/</a>
-	<p id="temu-title">Temu</p>
-	<a href="https://www.temu.com">https://www.temu.com</a>
-	<p id="msoffice-title">MS Office Online</p>
-	<a href="https://www.office.com">https://www.office.com/</a>
-	<p id="apple-title">Apple</p>
-	<a href="https://www.apple.com">https://www.apple.com/</a>
-	<p id="weather-title">Weather Forcast</p>
-	<a href="https://www.weather.com">https://www.weather.com/</a>
-	<p id="canva-title">Canva</p>
-	<a href="https://www.canva.com">https://www.canva.com/</a>
-	<p id="vercel-title">Vercel</p>
-	<a href="https://www.vercel.com/">https://www.vercel.com/</a>
-    <p id="spotify-title">Spotify</p>
-	<a href="https://www.spotify.com">https://www.spotify.com/</a>
+    const contentArea = document.getElementById("contentArea");
+    contentArea.innerHTML = ''; // Clear existing content
 
-	<hr>
-	<h1>Our Games</h1>
-	<p id="tictactoe-title">Tic Tac Toe</p>
-	<a href="https://mygame-xi-ten.vercel.app/">https://mygame-xi-ten.vercel.app/</a>
-	<p id="snakegame-title">Snake Game</p>
-	<a href="https://snake-game-lime-seven.vercel.app/">https://snake-game-lime-seven.vercel.app/</a>
-	<p id="dungeon-title">Dungeon Crawler</p>
-	<a href="https://dugeon-crawler.vercel.app/">https://dugeon-crawler.vercel.app/</a>
-	<hr>
-	<h1>Gaming Websites</h1>
-	<p id="roblox-title">Roblox</p>
-	<a href="https://www.roblox.com">https://www.roblox.com/</a>
-	<p id="steam-title">Steam</p>
-	<a href="https://www.steampowered.com">https://www.steampowered.com/</a>
-	<p id="poki-title">Poki Games</p>
-	<a href="https://www.poki.com">https://www.poki.com/</a>
-	<p id="xbox-title">Xbox</p>
-	<a href="https://www.xbox.com">https://www.xbox.com/</a>
-	<p id="playstation-title">Playstation</p>
-	<a href="https://www.playstation.com">https://www.playstation.com/</a>
-	<p id="epicgames-title">Epic Games Store</p>
-	<a href="https://www.epicgames.com">https://www.epicgames.com/</a>
-	<p id="nintendo-title">Nintendo</p>
-	<a href="https://www.nintendo.com">https://www.nintendo.com/</a>
-	<p id="minecraft-title">Minecraft</p>
-	<a href="https://www.minecraft.net">https://www.minecraft.net/</a>
-	<hr>
-	<h3>THANKS - YOU</h3>
-    <p id="noResultsMessage">No matching websites found.</p>
-  `;
-  document.getElementById('initialMessage').style.display = 'none'; // Hide initial message
+    contentData.forEach(item => {
+        let element;
+        if (item.type === 'heading1') {
+            element = document.createElement('h1');
+            element.id = item.id;
+            element.textContent = item.text;
+        } else if (item.type === 'heading3') {
+            element = document.createElement('h3');
+            element.id = item.id;
+            element.textContent = item.text;
+        } else if (item.type === 'paragraph') {
+            element = document.createElement('p');
+            element.id = item.id;
+            element.textContent = item.text;
+        } else if (item.type === 'link') {
+            element = document.createElement('a');
+            element.href = item.href;
+            element.textContent = item.text;
+        } else if (item.type === 'hr') {
+            element = document.createElement('hr');
+            element.id = item.id;
+        }
+        if (element) {
+            contentArea.appendChild(element);
+        }
+    });
+    document.getElementById('noResultsMessage').style.display = 'none'; // Ensure this is hidden when content is loaded
 }
 
 // Dark Mode Toggle Function
@@ -589,7 +619,7 @@ function resetStars() {
     }
 }
 
-// Formspree Submission Logic (Placeholder - replace YOUR_FORMSPREE_ENDPOINT)
+// Formspree Submission Logic
 const feedbackForm = document.getElementById('feedbackForm');
 if (feedbackForm) { // Ensure form exists before adding listener
     feedbackForm.addEventListener('submit', async function(event) {
@@ -628,58 +658,61 @@ if (feedbackForm) { // Ensure form exists before adding listener
     });
 }
 
-// New Search Functionality
+// Corrected Search Functionality using the contentData array
 function searchWebsites() {
     const searchTerm = document.getElementById('searchInput').value.toLowerCase();
     const contentArea = document.getElementById('contentArea');
-    const links = contentArea.querySelectorAll('a');
-    const paragraphs = contentArea.querySelectorAll('p:not(#initialMessage):not(#noResultsMessage)');
-    const headings = contentArea.querySelectorAll('h1, h3, hr'); // Include all headings and HRs
+    contentArea.innerHTML = ''; // Clear previous content
 
-    let found = false;
+    let foundResults = false;
 
-    // First, hide all relevant elements
-    links.forEach(link => link.style.display = 'none');
-    paragraphs.forEach(p => p.style.display = 'none');
-    headings.forEach(h => h.style.display = 'none'); // Hide all headings and HRs
+    for (let i = 0; i < contentData.length; i++) {
+        const item = contentData[i];
 
-    // Always ensure main titles are hidden during a search
-    const mainTitle = document.querySelector('#contentArea h1');
-    const subTitle = document.querySelector('#contentArea h3');
-    if (mainTitle) mainTitle.style.display = 'none';
-    if (subTitle) subTitle.style.display = 'none';
+        // We are looking for a paragraph followed by a link
+        if (item.type === 'paragraph' && contentData[i + 1] && contentData[i + 1].type === 'link') {
+            const paragraphText = item.text.toLowerCase();
+            const linkHref = contentData[i + 1].href.toLowerCase();
 
-    // Show or hide based on search term
-    for (let i = 0; i < links.length; i++) {
-        const link = links[i];
-        const linkText = link.textContent.toLowerCase();
-        const linkHref = link.href.toLowerCase();
+            // Check if either the paragraph text (name) or the link (website) matches the search term
+            if (paragraphText.includes(searchTerm) || linkHref.includes(searchTerm)) {
+                foundResults = true;
 
-        // Check if the link text or its URL contains the search term
-        if (linkText.includes(searchTerm) || linkHref.includes(searchTerm)) {
-            link.style.display = 'block'; // Show the link
+                // Create and append the paragraph (name)
+                const pElement = document.createElement('p');
+                pElement.id = item.id;
+                pElement.textContent = item.text;
+                contentArea.appendChild(pElement);
 
-            // Also show the preceding paragraph (if it exists)
-            let prevSibling = link.previousElementSibling;
-            while (prevSibling) {
-                if (prevSibling.tagName === 'P') {
-                    prevSibling.style.display = 'block';
-                    break;
-                }
-                prevSibling = prevSibling.previousElementSibling;
+                // Create and append the link (website)
+                const aElement = document.createElement('a');
+                aElement.href = contentData[i + 1].href;
+                aElement.textContent = contentData[i + 1].text; // Display the full URL as text
+                contentArea.appendChild(aElement);
+
+                // Add a line break or separator if you want space between results
+                // const hrElement = document.createElement('hr');
+                // contentArea.appendChild(hrElement);
             }
-            // Optionally show any relevant headings/HRs if a result is found within their section
-            // This part can be more complex to implement perfectly for all cases,
-            // but for simple display, showing the closest P tag is sufficient.
-            found = true;
         }
     }
 
-    const noResultsMessage = document.getElementById('noResultsMessage');
-    if (found) {
-        noResultsMessage.style.display = 'none';
+    const noResultsMessageElement = document.getElementById('noResultsMessage');
+    if (!foundResults) {
+        // If no results are found, display the message and hide others
+        contentArea.innerHTML = ''; // Clear everything first
+        const messageParagraph = document.createElement('p');
+        messageParagraph.id = 'noResultsMessage'; // Re-use the ID for consistency
+        messageParagraph.style.color = '#dc3545';
+        messageParagraph.style.fontWeight = 'bold';
+        messageParagraph.style.marginTop = '20px';
+        messageParagraph.textContent = 'No matching websites found.';
+        contentArea.appendChild(messageParagraph);
     } else {
-        noResultsMessage.style.display = 'block';
+        // If results are found, ensure the no results message is hidden
+        if (noResultsMessageElement) { // Check if it exists before trying to hide
+            noResultsMessageElement.style.display = 'none';
+        }
     }
 }
 </script>
@@ -693,7 +726,6 @@ function searchWebsites() {
 
 <div id="contentArea">
     <p id="initialMessage">Click "Show Content" to see the favourites!</p>
-    <p id="noResultsMessage">No matching websites found.</p>
 </div>
 
 <button type="button" onclick="loadMainContent()">Show Content</button>
@@ -716,7 +748,7 @@ function searchWebsites() {
     </form>
 </div>
 
-<p>@2025--------------------------Harshj58--------------------------WEBLITE</p>
+<p>@2025----------Harshj58----------WEBLITE</p>
 <a href="https://help-page-pied.vercel.app/">HELP</a>
 
 </body>
