@@ -404,6 +404,19 @@
             display: none; /* Hidden by default */
         }
 
+        /* Styles for the clock */
+        #globalClock {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #007bff; /* A nice blue color for the clock */
+            transition: color 0.5s ease;
+        }
+        body.dark-mode #globalClock {
+            color: #9ECFF4; /* Lighter blue in dark mode */
+        }
+
+
         @keyframes confetti-scatter {
          0% { background-position: 0 0, 10px 5px, 5px 15px, 15px 0px, 20px 10px; }
          100% { background-position: 20px 20px, 40px 35px, 45px 55px, 65px 50px, 80px 70px; }
@@ -617,7 +630,7 @@ const contentData = [
     { type: 'paragraph', id: 'minecraft-title', text: 'Minecraft' },
     { type: 'link', href: 'https://www.minecraft.net', text: 'https://www.minecraft.net/', target: '_blank' },
     { type: 'hr', id: 'hr4' },
-    { type: 'heading3', id: 'thanks-you', text: 'THANKS - YOU' }
+    { type: 'heading3', id: 'thanks-you', text: 'THANK - YOU' }
 ];
 
 // Function to load the "main page" content
@@ -657,6 +670,21 @@ function loadMainContent() {
     document.getElementById('noResultsMessage').style.display = 'none'; // Ensure this is hidden when content is loaded
 }
 
+// Function to update the global clock
+function updateClock() {
+    const now = new Date();
+    const options = {
+        timeZone: 'Asia/Kolkata', // Set to Indian Standard Time (IST)
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    };
+    const formatter = new Intl.DateTimeFormat('en-US', options);
+    const formattedTime = formatter.format(now);
+    document.getElementById('globalClock').textContent = `Current Time in India: ${formattedTime}`;
+}
+
 // Dark Mode Toggle Function
 function toggleDarkMode() {
     document.body.classList.toggle('dark-mode');
@@ -685,6 +713,10 @@ window.onload = function() {
         star.addEventListener('click', () => selectRating(index + 1));
     });
     document.querySelector('.stars').addEventListener('mouseout', resetStars);
+
+    // Initial call to update clock and then set interval
+    updateClock();
+    setInterval(updateClock, 1000); // Update every second
 };
 
 
@@ -834,6 +866,8 @@ function searchWebsites() {
     <input type="search" id="searchInput" placeholder="Search websites..." onkeyup="if(event.keyCode === 13) searchWebsites()">
     <button onclick="searchWebsites()">Search</button>
 </div>
+
+<div id="globalClock"></div>
 
 <div id="contentArea">
     <p id="initialMessage">Click "Show Content" to see the favourites!</p>
