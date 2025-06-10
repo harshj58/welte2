@@ -19,6 +19,8 @@
             background-color: #e0f2f7; /* Lighter, softer background blue */
             color: #333; /* Darker text for better readability */
             transition: background-color 0.5s ease, color 0.5s ease; /* Smooth transition for dark mode */
+            padding: 10px; /* Add some padding for small screens */
+            box-sizing: border-box; /* Include padding in element's total width and height */
 
             /* Confetti background */
             background-image:
@@ -139,15 +141,19 @@
             align-items: center; /* Vertically align items */
             justify-content: center; /* Horizontally center items */
             transition: background-color 0.5s ease, box-shadow 0.5s ease;
+            width: 90%; /* Responsive width */
+            max-width: 600px; /* Max width for larger screens */
+            box-sizing: border-box; /* Include padding in width */
         }
         .search-container input[type="search"] {
             padding: 12px; /* Increased padding */
             border: 1px solid #c0e0eb; /* Softer border color */
             border-radius: 6px;
-            width: 350px; /* Slightly wider input */
+            flex-grow: 1; /* Allow input to grow and take available space */
             font-size: 17px;
             box-sizing: border-box; /* Include padding in width */
             transition: background-color 0.5s ease, border-color 0.5s ease, color 0.5s ease;
+            min-width: 150px; /* Minimum width for input on smaller screens */
         }
         .search-container button {
             padding: 12px 20px; /* Increased padding */
@@ -159,6 +165,7 @@
             font-size: 17px;
             margin-left: 10px;
             transition: background-color 0.3s ease; /* Smooth hover effect */
+            white-space: nowrap; /* Prevent button text from wrapping */
         }
         .search-container button:hover {
             background-color: #0c5cb2; /* Darker blue on hover */
@@ -169,11 +176,12 @@
             padding: 30px; /* More padding */
             border-radius: 12px; /* More rounded corners */
             box-shadow: 0 4px 12px rgba(0,0,0,0.1); /* Softer, larger shadow */
-            width: 85%; /* Slightly wider content area */
+            width: 90%; /* Responsive width */
             max-width: 650px; /* Increased max-width */
             text-align: center;
             margin-top: 20px; /* Space above content area */
             transition: background-color 0.5s ease, box-shadow 0.5s ease;
+            box-sizing: border-box;
         }
         #contentArea p {
             margin-top: 20px; /* More space above paragraphs */
@@ -197,7 +205,7 @@
         }
 
         /* Specific link colors for main content */
-        #contentArea a[href*="youtube.com"] { color: #FF0000; }
+        #contentArea a[href*="http://www.youtube.com/"] { color: #FF0000; }
         #contentArea a[href*="w3schools.com"] { color: #04AA6D; }
         #contentArea a[href*="google.com"] { color: #4285F4; }
         #contentArea a[href*="softonic.com"] { color: #ED6A5E; }
@@ -233,7 +241,7 @@
         #contentArea a[href*="weather.com"] { color: #007bff; }
         #contentArea a[href*="canva.com"] { color: #00C4CC; }
         #contentArea a[href*="vercel.com"] { color: #000000; }
-        #contentArea a[href*="spotify.com"] { color: #1DB954; }
+        #contentArea a[href*="https://www.spotify.com"] { color: #1DB954; }
 
 
         #contentArea h1 {
@@ -295,6 +303,8 @@
             color: #777;
             text-align: center;
             transition: color 0.5s ease;
+            word-wrap: break-word; /* Ensure text wraps */
+            padding: 0 10px; /* Add padding to prevent text from touching edges */
         }
 
         body > a[href="https://help-page-pied.vercel.app/"] { /* Target the HELP link in footer */
@@ -325,11 +335,12 @@
             padding: 25px;
             border-radius: 12px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            width: 85%;
+            width: 90%; /* Responsive width */
             max-width: 650px;
             text-align: center;
             margin-top: 40px; /* More space above feedback section */
             transition: background-color 0.5s ease, box-shadow 0.5s ease;
+            box-sizing: border-box;
         }
 
         .feedback-section h2 {
@@ -402,6 +413,90 @@
          0% { background-position: 0 0, 10px 5px, 5px 15px, 15px 0px, 20px 10px; }
          100% { background-position: 20px 20px, 40px 35px, 45px 55px, 65px 50px, 80px 70px; }
         }
+
+        /* Media Queries for responsiveness */
+        @media (max-width: 768px) {
+            .search-container {
+                flex-direction: column; /* Stack input and button vertically */
+                padding: 15px;
+            }
+            .search-container input[type="search"] {
+                width: 100%;
+                margin-bottom: 10px; /* Space between input and button */
+                margin-left: 0;
+            }
+            .search-container button {
+                width: 100%;
+                margin-left: 0;
+            }
+            #contentArea, .feedback-section {
+                padding: 20px;
+                width: 95%; /* Make content wider on smaller screens */
+            }
+            #contentArea h1 {
+                font-size: 2em;
+            }
+            #contentArea h3 {
+                font-size: 1.2em;
+            }
+            #contentArea p {
+                font-size: 1em;
+            }
+            #contentArea a {
+                font-size: 0.9em;
+            }
+            button { /* General button adjustments for smaller screens */
+                width: calc(100% - 20px); /* Account for margin */
+                margin: 10px auto;
+                font-size: 16px;
+            }
+            body > p {
+                font-size: 0.8em;
+            }
+             .feedback-section h2 {
+                font-size: 1.6em;
+            }
+            .stars {
+                font-size: 1.8em;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 5px;
+            }
+            .search-container {
+                padding: 10px;
+            }
+            #contentArea, .feedback-section {
+                padding: 15px;
+            }
+            #contentArea h1 {
+                font-size: 1.8em;
+            }
+            #contentArea h3 {
+                font-size: 1em;
+            }
+            #contentArea p {
+                font-size: 0.9em;
+            }
+            #contentArea a {
+                font-size: 0.8em;
+            }
+            button {
+                font-size: 14px;
+                padding: 10px 15px;
+            }
+            body > p {
+                font-size: 0.75em;
+            }
+            .feedback-section h2 {
+                font-size: 1.4em;
+            }
+            .stars {
+                font-size: 1.5em;
+            }
+        }
     </style>
 
 <script>
@@ -421,106 +516,106 @@ const contentData = [
     { type: 'heading3', id: 'subTitle', text: 'Everyone\'s favourites' },
     { type: 'hr', id: 'hr1' },
     { type: 'paragraph', id: 'youtube-title', text: 'Youtube' },
-    { type: 'link', href: 'http://www.youtube.com/', text: 'http://www.youtube.com/' },
+    { type: 'link', href: 'http://www.youtube.com/', text: 'http://www.youtube.com/', target: '_blank' },
     { type: 'paragraph', id: 'w3schools-title', text: 'W3 SCHOOLS' },
-    { type: 'link', href: 'https://www.w3schools.com/', text: 'https://www.w3schools.com/' },
+    { type: 'link', href: 'https://www.w3schools.com/', text: 'https://www.w3schools.com/', target: '_blank' },
     { type: 'paragraph', id: 'google-title', text: 'Google' },
-    { type: 'link', href: 'https://www.google.com/', text: 'https://www.google.com/' },
+    { type: 'link', href: 'https://www.google.com/', text: 'https://www.google.com/', target: '_blank' },
     { type: 'paragraph', id: 'softonic-title', text: 'Softonic' },
-    { type: 'link', href: 'https://www.softonic.com', text: 'https://www.softonic.com/' },
+    { type: 'link', href: 'https://www.softonic.com', text: 'https://www.softonic.com/', target: '_blank' },
     { type: 'paragraph', id: 'microsoft-title', text: 'Microsoft' },
-    { type: 'link', href: 'https://www.microsoft.com', text: 'https://www.microsoft.com' },
+    { type: 'link', href: 'https://www.microsoft.com', text: 'https://www.microsoft.com', target: '_blank' },
     { type: 'paragraph', id: 'chatgpt-title', text: 'ChatGPT' },
-    { type: 'link', href: 'https://openai.com/chatgpt/overview/', text: 'https://openai.com/chatgpt/overview/' },
+    { type: 'link', href: 'https://openai.com/chatgpt/overview/', text: 'https://openai.com/chatgpt/overview/', target: '_blank' },
     { type: 'paragraph', id: 'gemini-title', text: 'Gemini' },
-    { type: 'link', href: 'https://gemini.google.com/app', text: 'https://gemini.google.com/app' },
+    { type: 'link', href: 'https://gemini.google.com/app', text: 'https://gemini.google.com/app', target: '_blank' },
     { type: 'paragraph', id: 'deepseek-title', text: 'DeepSeek R1' },
-    { type: 'link', href: 'https://deepseek.com/en', text: 'https://deepseek.com/en' },
+    { type: 'link', href: 'https://deepseek.com/en', text: 'https://deepseek.com/en', target: '_blank' },
     { type: 'paragraph', id: 'github-title', text: 'GitHub' },
-    { type: 'link', href: 'https://www.github.com', text: 'https://www.github.com/' },
+    { type: 'link', href: 'https://www.github.com', text: 'https://www.github.com/', target: '_blank' },
     { type: 'paragraph', id: 'wikipedia-title', text: 'Wikipedia' },
-    { type: 'link', href: 'https://www.Wikipedia.org', text: 'https://www.Wikipedia.org/' },
+    { type: 'link', href: 'https://www.Wikipedia.org', text: 'https://www.Wikipedia.org/', target: '_blank' },
     { type: 'paragraph', id: 'yahoo-title', text: 'Yahoo' },
-    { type: 'link', href: 'https://www.yahoo.com', text: 'https://www.yahoo.com/' },
+    { type: 'link', href: 'https://www.yahoo.com', text: 'https://www.yahoo.com/', target: '_blank' },
     { type: 'paragraph', id: 'yandex-title', text: 'Yandex Search Engine' },
-    { type: 'link', href: 'https://www.yandex.ru', text: 'https://www.yandex.ru/' },
+    { type: 'link', href: 'https://www.yandex.ru', text: 'https://www.yandex.ru/', target: '_blank' },
     { type: 'paragraph', id: 'duckduckgo-title', text: 'DuckDuckGo' },
-    { type: 'link', href: 'https://www.duckduckgo.com', text: 'https://www.duckduckgo.com/' },
+    { type: 'link', href: 'https://www.duckduckgo.com', text: 'https://www.duckduckgo.com/', target: '_blank' },
     { type: 'paragraph', id: 'openai-title', text: 'OpenAI' },
-    { type: 'link', href: 'https://www.openai.com', text: 'https://www.openai.com/' },
+    { type: 'link', href: 'https://www.openai.com', text: 'https://www.openai.com/', target: '_blank' },
     { type: 'paragraph', id: 'facebook-title', text: 'Facebook' },
-    { type: 'link', href: 'https://www.facebook.com', text: 'https://www.facebook.com/' },
+    { type: 'link', href: 'https://www.facebook.com', text: 'https://www.facebook.com/', target: '_blank' },
     { type: 'paragraph', id: 'instagram-title', text: 'Instagram' },
-    { type: 'link', href: 'https://www.instagram.com', text: 'https://www.instagram.com/' },
+    { type: 'link', href: 'https://www.instagram.com', text: 'https://www.instagram.com/', target: '_blank' },
     { type: 'paragraph', id: 'x-title', text: 'X' },
-    { type: 'link', href: 'https://www.x.com', text: 'https://www.x.com/' },
+    { type: 'link', href: 'https://www.x.com', text: 'https://www.x.com/', target: '_blank' },
     { type: 'paragraph', id: 'whatsapp-title', text: 'WhatsApp' },
-    { type: 'link', href: 'https://www.whatsapp.com', text: 'https://www.whatsapp.com/' },
+    { type: 'link', href: 'https://www.whatsapp.com', text: 'https://www.whatsapp.com/', target: '_blank' },
     { type: 'paragraph', id: 'reddit-title', text: 'Reddit' },
-    { type: 'link', href: 'https://www.reddit.com', text: 'https://www.reddit.com/' },
+    { type: 'link', href: 'https://www.reddit.com', text: 'https://www.reddit.com/', target: '_blank' },
     { type: 'paragraph', id: 'tiktok-title', text: 'TikTok(If its Banned in your country i strongly advise not to use it.)' },
-    { type: 'link', href: 'https://www.tiktok.com', text: 'https://www.tiktok.com/' },
+    { type: 'link', href: 'https://www.tiktok.com', text: 'https://www.tiktok.com/', target: '_blank' },
     { type: 'paragraph', id: 'linkedin-title', text: 'Linkedin' },
-    { type: 'link', href: 'https://www.linkedin.com', text: 'https://www.linkedin.com/' },
+    { type: 'link', href: 'https://www.linkedin.com', text: 'https://www.linkedin.com/', target: '_blank' },
     { type: 'paragraph', id: 'vk-title', text: 'VK search engine(russian)' },
-    { type: 'link', href: 'https://www.vk.com', text: 'https://www.vk.com/' },
+    { type: 'link', href: 'https://www.vk.com', text: 'https://www.vk.com/', target: '_blank' },
     { type: 'paragraph', id: 'telegram-title', text: 'Telegram' },
-    { type: 'link', href: 'https://www.telegram.com', text: 'https://www.telegram.com/' },
+    { type: 'link', href: 'https://www.telegram.com', text: 'https://www.telegram.com/', target: '_blank' },
     { type: 'paragraph', id: 'discord-title', text: 'Discord' },
-    { type: 'link', href: 'https://www.discord.com', text: 'https://www.discord.com/' },
+    { type: 'link', href: 'https://www.discord.com', text: 'https://www.discord.com/', target: '_blank' },
     { type: 'paragraph', id: 'pinterest-title', text: 'Pinterest' },
-    { type: 'link', href: 'https://www.pinterest.com', text: 'https://www.pinterest.com/' },
+    { type: 'link', href: 'https://www.pinterest.com', text: 'https://www.pinterest.com/', target: '_blank' },
     { type: 'paragraph', id: 'tumblr-title', text: 'Tumblr' },
-    { type: 'link', href: 'https://www.tumblr.com', text: 'https://www.tumblr.com/' },
+    { type: 'link', href: 'https://www.tumblr.com', text: 'https://www.tumblr.com/', target: '_blank' },
     { type: 'paragraph', id: 'netflix-title', text: 'Netflix' },
-    { type: 'link', href: 'https://www.netflix.com', text: 'https://www.netflix.com/' },
+    { type: 'link', href: 'https://www.netflix.com', text: 'https://www.netflix.com/', target: '_blank' },
     { type: 'paragraph', id: 'live-title', text: 'Live' },
-    { type: 'link', href: 'https://www.live.com', text: 'https://www.live.com/' },
+    { type: 'link', href: 'https://www.live.com', text: 'https://www.live.com/', target: '_blank' },
     { type: 'paragraph', id: 'microsoft365-title', text: 'Microsoft 365 & Cloud Services' },
-    { type: 'link', href: 'https://www.microsoftonline.com', text: 'https://www.microsoftonline.com/' },
+    { type: 'link', href: 'https://www.microsoftonline.com', text: 'https://www.microsoftonline.com/', target: '_blank' },
     { type: 'paragraph', id: 'baidu-title', text: 'Baidu search engine(chinese)' },
-    { type: 'link', href: 'https://www.baidu.com', text: 'https://www.baidu.com/' },
+    { type: 'link', href: 'https://www.baidu.com', text: 'https://www.baidu.com/', target: '_blank' },
     { type: 'paragraph', id: 'temu-title', text: 'Temu' },
-    { type: 'link', href: 'https://www.temu.com', text: 'https://www.temu.com' },
+    { type: 'link', href: 'https://www.temu.com', text: 'https://www.temu.com', target: '_blank' },
     { type: 'paragraph', id: 'msoffice-title', text: 'MS Office Online' },
-    { type: 'link', href: 'https://www.office.com', text: 'https://www.office.com/' },
+    { type: 'link', href: 'https://www.office.com', text: 'https://www.office.com/', target: '_blank' },
     { type: 'paragraph', id: 'apple-title', text: 'Apple' },
-    { type: 'link', href: 'https://www.apple.com', text: 'https://www.apple.com/' },
+    { type: 'link', href: 'https://www.apple.com', text: 'https://www.apple.com/', target: '_blank' },
     { type: 'paragraph', id: 'weather-title', text: 'Weather Forcast' },
-    { type: 'link', href: 'https://www.weather.com', text: 'https://www.weather.com/' },
+    { type: 'link', href: 'https://www.weather.com', text: 'https://www.weather.com/', target: '_blank' },
     { type: 'paragraph', id: 'canva-title', text: 'Canva' },
-    { type: 'link', href: 'https://www.canva.com', text: 'https://www.canva.com/' },
+    { type: 'link', href: 'https://www.canva.com', text: 'https://www.canva.com/', target: '_blank' },
     { type: 'paragraph', id: 'vercel-title', text: 'Vercel' },
-    { type: 'link', href: 'https://www.vercel.com/', text: 'https://www.vercel.com/' },
+    { type: 'link', href: 'https://www.vercel.com/', text: 'https://www.vercel.com/', target: '_blank' },
     { type: 'paragraph', id: 'spotify-title', text: 'Spotify' },
-    { type: 'link', href: 'https://www.spotify.com', text: 'https://www.spotify.com/' },
+    { type: 'link', href: 'https://www.spotify.com', text: 'https://www.spotify.com/', target: '_blank' },
     
     { type: 'hr', id: 'hr2' },
     { type: 'heading1', id: 'gamesTitle', text: 'Our Games' },
     { type: 'paragraph', id: 'tictactoe-title', text: 'Tic Tac Toe' },
-    { type: 'link', href: 'https://mygame-xi-ten.vercel.app/', text: 'https://mygame-xi-ten.vercel.app/' },
+    { type: 'link', href: 'https://mygame-xi-ten.vercel.app/', text: 'https://mygame-xi-ten.vercel.app/', target: '_blank' },
     { type: 'paragraph', id: 'snakegame-title', text: 'Snake Game' },
-    { type: 'link', href: 'https://snake-game-lime-seven.vercel.app/', text: 'https://snake-game-lime-seven.vercel.app/' },
+    { type: 'link', href: 'https://snake-game-lime-seven.vercel.app/', text: 'https://snake-game-lime-seven.vercel.app/', target: '_blank' },
     { type: 'paragraph', id: 'dungeon-title', text: 'Dungeon Crawler' },
-    { type: 'link', href: 'https://dugeon-crawler.vercel.app/', text: 'https://dugeon-crawler.vercel.app/' },
+    { type: 'link', href: 'https://dugeon-crawler.vercel.app/', text: 'https://dugeon-crawler.vercel.app/', target: '_blank' },
     { type: 'hr', id: 'hr3' },
     { type: 'heading1', id: 'gamingWebsitesTitle', text: 'Gaming Websites' },
     { type: 'paragraph', id: 'roblox-title', text: 'Roblox' },
-    { type: 'link', href: 'https://www.roblox.com', text: 'https://www.roblox.com/' },
+    { type: 'link', href: 'https://www.roblox.com', text: 'https://www.roblox.com/', target: '_blank' },
     { type: 'paragraph', id: 'steam-title', text: 'Steam' },
-    { type: 'link', href: 'https://www.steampowered.com', text: 'https://www.steampowered.com/' },
+    { type: 'link', href: 'https://www.steampowered.com', text: 'https://www.steampowered.com/', target: '_blank' },
     { type: 'paragraph', id: 'poki-title', text: 'Poki Games' },
-    { type: 'link', href: 'https://www.poki.com', text: 'https://www.poki.com/' },
+    { type: 'link', href: 'https://www.poki.com', text: 'https://www.poki.com/', target: '_blank' },
     { type: 'paragraph', id: 'xbox-title', text: 'Xbox' },
-    { type: 'link', href: 'https://www.xbox.com', text: 'https://www.xbox.com/' },
+    { type: 'link', href: 'https://www.xbox.com', text: 'https://www.xbox.com/', target: '_blank' },
     { type: 'paragraph', id: 'playstation-title', text: 'Playstation' },
-    { type: 'link', href: 'https://www.playstation.com', text: 'https://www.playstation.com/' },
+    { type: 'link', href: 'https://www.playstation.com', text: 'https://www.playstation.com/', target: '_blank' },
     { type: 'paragraph', id: 'epicgames-title', text: 'Epic Games Store' },
-    { type: 'link', href: 'https://www.epicgames.com', text: 'https://www.epicgames.com/' },
+    { type: 'link', href: 'https://www.epicgames.com', text: 'https://www.epicgames.com/', target: '_blank' },
     { type: 'paragraph', id: 'nintendo-title', text: 'Nintendo' },
-    { type: 'link', href: 'https://www.nintendo.com', text: 'https://www.nintendo.com/' },
+    { type: 'link', href: 'https://www.nintendo.com', text: 'https://www.nintendo.com/', target: '_blank' },
     { type: 'paragraph', id: 'minecraft-title', text: 'Minecraft' },
-    { type: 'link', href: 'https://www.minecraft.net', text: 'https://www.minecraft.net/' },
+    { type: 'link', href: 'https://www.minecraft.net', text: 'https://www.minecraft.net/', target: '_blank' },
     { type: 'hr', id: 'hr4' },
     { type: 'heading3', id: 'thanks-you', text: 'THANKS - YOU' }
 ];
@@ -548,6 +643,9 @@ function loadMainContent() {
             element = document.createElement('a');
             element.href = item.href;
             element.textContent = item.text;
+            if (item.target) { // Add target="_blank" if specified in contentData
+                element.target = item.target;
+            }
         } else if (item.type === 'hr') {
             element = document.createElement('hr');
             element.id = item.id;
@@ -579,6 +677,14 @@ window.onload = function() {
     }
     // Attach event listener to dark mode toggle button
     document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
+
+    // Initialize stars
+    const stars = document.querySelectorAll('.stars .fa-star');
+    stars.forEach((star, index) => {
+        star.addEventListener('mouseover', () => highlightStars(index + 1));
+        star.addEventListener('click', () => selectRating(index + 1));
+    });
+    document.querySelector('.stars').addEventListener('mouseout', resetStars);
 };
 
 
@@ -666,53 +772,58 @@ function searchWebsites() {
 
     let foundResults = false;
 
+    // Filter contentData to find matching items
+    const filteredContent = [];
     for (let i = 0; i < contentData.length; i++) {
         const item = contentData[i];
-
-        // We are looking for a paragraph followed by a link
         if (item.type === 'paragraph' && contentData[i + 1] && contentData[i + 1].type === 'link') {
             const paragraphText = item.text.toLowerCase();
             const linkHref = contentData[i + 1].href.toLowerCase();
 
-            // Check if either the paragraph text (name) or the link (website) matches the search term
             if (paragraphText.includes(searchTerm) || linkHref.includes(searchTerm)) {
+                filteredContent.push(item);
+                filteredContent.push(contentData[i + 1]);
                 foundResults = true;
-
-                // Create and append the paragraph (name)
-                const pElement = document.createElement('p');
-                pElement.id = item.id;
-                pElement.textContent = item.text;
-                contentArea.appendChild(pElement);
-
-                // Create and append the link (website)
-                const aElement = document.createElement('a');
-                aElement.href = contentData[i + 1].href;
-                aElement.textContent = contentData[i + 1].text; // Display the full URL as text
-                contentArea.appendChild(aElement);
-
-                // Add a line break or separator if you want space between results
-                // const hrElement = document.createElement('hr');
-                // contentArea.appendChild(hrElement);
             }
+        } else if (item.type === 'heading1' || item.type === 'heading3' || item.type === 'hr') {
+            // Keep headings and HRs if they are part of the original structure or a general search term
+            // For simplicity, we'll only show matched paragraph/link pairs for now.
+            // If you want headings/HRs to appear with relevant search results,
+            // you'd need more complex logic to include them contextually.
         }
     }
 
-    const noResultsMessageElement = document.getElementById('noResultsMessage');
-    if (!foundResults) {
-        // If no results are found, display the message and hide others
+    if (foundResults) {
+        // Append filtered content to contentArea
+        filteredContent.forEach(item => {
+            let element;
+            if (item.type === 'paragraph') {
+                element = document.createElement('p');
+                element.id = item.id;
+                element.textContent = item.text;
+            } else if (item.type === 'link') {
+                element = document.createElement('a');
+                element.href = item.href;
+                element.textContent = item.text;
+                if (item.target) {
+                    element.target = item.target; // Ensure target="_blank" is applied
+                }
+            }
+            if (element) {
+                contentArea.appendChild(element);
+            }
+        });
+        document.getElementById('noResultsMessage').style.display = 'none';
+    } else {
+        // Display no results message
         contentArea.innerHTML = ''; // Clear everything first
         const messageParagraph = document.createElement('p');
-        messageParagraph.id = 'noResultsMessage'; // Re-use the ID for consistency
+        messageParagraph.id = 'noResultsMessage';
         messageParagraph.style.color = '#dc3545';
         messageParagraph.style.fontWeight = 'bold';
         messageParagraph.style.marginTop = '20px';
         messageParagraph.textContent = 'No matching websites found.';
         contentArea.appendChild(messageParagraph);
-    } else {
-        // If results are found, ensure the no results message is hidden
-        if (noResultsMessageElement) { // Check if it exists before trying to hide
-            noResultsMessageElement.style.display = 'none';
-        }
     }
 }
 </script>
@@ -749,7 +860,7 @@ function searchWebsites() {
 </div>
 
 <p>@2025----------Harshj58----------WEBLITE</p>
-<a href="https://help-page-pied.vercel.app/">HELP</a>
+<a href="https://help-page-pied.vercel.app/" target="_blank">HELP</a>
 
 </body>
 </html>
