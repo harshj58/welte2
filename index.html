@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Content Example</title>
+    <style>
+       
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column; 
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: powderblue; 
+        }
+        .search-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px; 
+        }
+        .search-container input[type="search"] {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 300px;
+            font-size: 16px;
+        }
+        .search-container button {
+            padding: 10px 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 5px;
+        }
+        .search-container button:hover {
+            background-color: #0056b3;
+        }
+        
+        #contentArea {
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            width: 80%; 
+            max-width: 600px;
+            text-align: center;
+        }
+        #contentArea p {
+            margin-top: 15px;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        #contentArea a {
+            display: block; 
+            margin-bottom: 10px;
+            word-wrap: break-word; 
+        }
+        
+        #contentArea h3 {
+            color: #555;
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+        
+        #contentArea img {
+            width: 100px; 
+            display: block; 
+            margin: 0 auto 20px auto; 
+        }
+
+        /* Styles for the "Join Our Team" form */
+        .join-team-form {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .join-team-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        .join-team-form input[type="text"],
+        .join-team-form input[type="email"],
+        .join-team-form textarea {
+            width: calc(100% - 22px); /* Adjusting for padding and border */
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 16px;
+        }
+        .join-team-form textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        .join-team-form button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        .join-team-form button:hover {
+            background-color: #218838;
+        }
+    </style>
+
+<script>
+// Function to clear the content area
+function clearContent() {
+  document.getElementById("contentArea").innerHTML = "";
+}
+
+// Function to load the "main page" content
+function loadMainContent() {
+  document.getElementById("contentArea").innerHTML = `
+    <h1 style="color:blue;">About Shorcuteez</h1>
+	<p style="color:powderblue;">Shorcuteez is a website where you can access everyday websites.No need to be scared,<br> this website has official shortcuts to everyday websites so you dont get scammed by fraud websites.<br>We have a growing number of shortcuts.
+	<hr style="color:powderblue;">
+	<h2 style="color:blue;">How to access these shortcuts?</h2>
+	<p style="color:powderblue;">You can access them by just cliking on them.
+	<hr style="color:powderblue;">
+  `;
+}
+
+// ... (your existing clearContent, loadMainContent functions) ...
+
+// Function to load the "Join Our Team" form using FormSubmit.co
+function loadJoinTeamForm() {
+    document.getElementById("contentArea").innerHTML = `
+        <h2 style="color:blue;">Join Our Team</h2>
+        <p style="color:powderblue;">We are always looking for talented individuals to join us!</p>
+        <div class="join-team-form">
+            <form action="https://formspree.io/f/manjwljp" method="POST">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" required>
+
+                <label for="message">Tell us about yourself and why you want to join:</label>
+                <textarea id="message" name="message" rows="5" name="message" required></textarea>
+
+                <input type="text" name="_honey" style="display:none"> 
+                
+                <input type="hidden" name="_subject" value="New Team Application!">
+                <button type="submit">Submit Application</button>
+            </form>
+            <div id="formConfirmation" style="margin-top: 20px; font-weight: bold;"></div>
+        </div>
+    `;
+}
+
+// ... (your existing window.onload) ...
+</script>
+</head>
+<body>
+
+<div id="contentArea">
+    <p id="initialMessage">Click "Show Content" to learn about Shorcuteez.</p>
+</div>
+
+<button type="button" onclick="loadMainContent()">Show Content</button>
+<button type="button" onclick="loadJoinTeamForm()" style="margin-left: 10px;">Join Our Team</button>
+
+<p>@2025-----------------------------------------------------------------------------------------Harshj58--------------------------------------------------------------------------------WEBLITE</p>
+
+</body>
+</html>
