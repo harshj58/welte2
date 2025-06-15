@@ -182,6 +182,9 @@
             margin-top: 20px; /* Space above content area */
             transition: background-color 0.5s ease, box-shadow 0.5s ease;
             box-sizing: border-box;
+            max-height: 70vh;
+            overflow-y: auto;
+            position: relative;
         }
         #contentArea p {
             margin-top: 20px; /* More space above paragraphs */
@@ -428,6 +431,19 @@
         }
         button[onclick="clearContent()"]:hover {
             background-color: #c82333; /* Darker red on hover */
+        }
+
+        /* Floating clear button */
+        .floating-clear-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: none; /* Initially hidden */
+            transition: all 0.3s ease;
+        }
+        .floating-clear-btn.visible {
+            display: block;
         }
 
         /* Footer styles */
@@ -1101,8 +1117,28 @@ window.onload = function() {
     // Initial call to update clock and then set interval
     updateClock();
     setInterval(updateClock, 1000); // Update every second
+    
+    // Setup floating clear button
+    setupFloatingClearButton();
 };
 
+// Setup floating clear button that appears when scrolling
+function setupFloatingClearButton() {
+    const contentArea = document.getElementById('contentArea');
+    const floatingClearBtn = document.createElement('button');
+    floatingClearBtn.className = 'floating-clear-btn';
+    floatingClearBtn.textContent = 'Clear Content';
+    floatingClearBtn.onclick = clearContent;
+    document.body.appendChild(floatingClearBtn);
+    
+    contentArea.addEventListener('scroll', function() {
+        if (contentArea.scrollTop > 100) {
+            floatingClearBtn.classList.add('visible');
+        } else {
+            floatingClearBtn.classList.remove('visible');
+        }
+    });
+}
 
 // Star Rating Functions
 function highlightStars(index) {
@@ -1374,6 +1410,49 @@ function searchWebsites() {
 </script>
 </head>
 <body>
+
+<script>
+// [Previous script content remains the same until contentData array]
+
+const contentData = [
+    // [Previous contentData entries remain the same until the social media section]
+
+    // Social Media / Communication
+    { type: 'paragraph', id: 'twitter-title', text: 'Twitter', keywords: ['social media', 'microblogging', 'news'] },
+    { type: 'link', href: 'https://twitter.com/', text: 'https://twitter.com/', target: '_blank' },
+    { type: 'paragraph', id: 'viber-title', text: 'Viber', keywords: ['messaging', 'calls', 'communication'] },
+    { type: 'link', href: 'https://www.viber.com/', text: 'https://www.viber.com/', target: '_blank' },
+    { type: 'paragraph', id: 'line-title', text: 'Line', keywords: ['messaging', 'social media', 'japan'] },
+    { type: 'link', href: 'https://line.me/', text: 'https://line.me/', target: '_blank' },
+    { type: 'paragraph', id: 'kik-title', text: 'Kik', keywords: ['messaging', 'chat', 'social'] },
+    { type: 'link', href: 'https://www.kik.com/', text: 'https://www.kik.com/', target: '_blank' },
+
+    // [Continue with existing content until e-commerce section]
+
+    // E-commerce / Shopping
+    { type: 'paragraph', id: 'rakuten-title', text: 'Rakuten', keywords: ['ecommerce', 'cashback', 'shopping'] },
+    { type: 'link', href: 'https://www.rakuten.com/', text: 'https://www.rakuten.com/', target: '_blank' },
+    { type: 'paragraph', id: 'newegg-title', text: 'Newegg', keywords: ['electronics', 'computers', 'tech'] },
+    { type: 'link', href: 'https://www.newegg.com/', text: 'https://www.newegg.com/', target: '_blank' },
+    { type: 'paragraph', id: 'wayfair-title', text: 'Wayfair', keywords: ['furniture', 'home goods', 'decor'] },
+    { type: 'link', href: 'https://www.wayfair.com/', text: 'https://www.wayfair.com/', target: '_blank' },
+    { type: 'paragraph', id: 'overstock-title', text: 'Overstock', keywords: ['furniture', 'home goods', 'deals'] },
+    { type: 'link', href: 'https://www.overstock.com/', text: 'https://www.overstock.com/', target: '_blank' },
+
+    // [Continue with existing content until travel section]
+
+    // Travel
+    { type: 'paragraph', id: 'kayak-title', text: 'Kayak', keywords: ['flights', 'hotels', 'travel search'] },
+    { type: 'link', href: 'https://www.kayak.com/', text: 'https://www.kayak.com/', target: '_blank' },
+    { type: 'paragraph', id: 'skyscanner-title', text: 'Skyscanner', keywords: ['flights', 'hotels', 'car rentals'] },
+    { type: 'link', href: 'https://www.skyscanner.com/', text: 'https://www.skyscanner.com/', target: '_blank' },
+
+    // [Rest of the existing contentData array remains the same]
+];
+
+// [Rest of the JavaScript code remains the same]
+
+</script>
 
 <div class="search-container">
     <input type="search" id="searchInput" placeholder="Search websites..." onkeyup="if(event.keyCode === 13) searchWebsites()">
