@@ -669,7 +669,20 @@
                 font-size: 1.5em;
             }
         }
-    </style>
+    
+.site-logo {
+    position: fixed;
+    top: 15px;
+    left: 20px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    z-index: 1000;
+    background-color: white;
+}
+
+</style>
 
 <script>
 let currentRating = 0; // To store the selected star rating
@@ -1414,6 +1427,8 @@ function searchWebsites() {
 </script>
 </head>
 <body>
+<img src="Screenshot 2025-10-12 170213.png" alt="Shorcuteez Logo" class="site-logo">
+
 
 <script>
 // [Previous script content remains the same until contentData array]
