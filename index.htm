@@ -1585,6 +1585,50 @@ const contentData = [
     </div>
 </div>
 
+<style>
+    #ai-widget-trigger {
+        position: fixed; bottom: 20px; right: 20px; width: 56px; height: 56px;
+        background: #2563eb; border-radius: 16px; display: flex; align-items: center;
+        justify-content: center; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        z-index: 10000; transition: all 0.3s ease; border: 1px solid rgba(255,255,255,0.1);
+    }
+    #ai-widget-trigger:hover { transform: scale(1.05); background: #3b82f6; }
+    #ai-widget-window {
+        position: fixed; bottom: 90px; right: 20px; width: 350px; height: 500px;
+        max-height: 70vh; background: #0d1117; border: 1px solid rgba(59, 130, 246, 0.4);
+        border-radius: 1.5rem; display: none; flex-direction: column; z-index: 9999;
+        box-shadow: 0 20px 50px rgba(0,0,0,0.6); overflow: hidden; font-family: 'Inter', sans-serif;
+    }
+    #ai-widget-window.active { display: flex; animation: widgetUp 0.3s ease-out; }
+    @keyframes widgetUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+    .widget-header { padding: 15px; background: #161b22; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.05); }
+    .widget-chat { flex: 1; overflow-y: auto; padding: 15px; display: flex; flex-direction: column; gap: 12px; }
+    .widget-msg { padding: 10px 14px; border-radius: 12px; font-size: 13px; line-height: 1.5; max-width: 85%; }
+    .msg-ai { background: rgba(255,255,255,0.05); color: #e1e1e1; align-self: flex-start; }
+    .msg-user { background: #2563eb; color: white; align-self: flex-end; }
+    .widget-input-area { padding: 15px; display: flex; gap: 8px; background: #0d1117; border-top: 1px solid rgba(255,255,255,0.05); }
+    #widget-input { background: #161b22; border: 1px solid rgba(255,255,255,0.1); border-radius: 10px; color: white; padding: 10px; flex: 1; outline: none; font-size: 13px; }
+    .scrollbar-hide::-webkit-scrollbar { display: none; }
+</style>
+
+<div id="ai-widget-trigger">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+</div>
+
+<div id="ai-widget-window">
+    <div class="widget-header">
+        <span style="color: #2563eb; font-weight: 900; font-size: 11px; letter-spacing: 1px;">SITE ASSISTANT</span>
+        <button onclick="document.getElementById('ai-widget-window').classList.remove('active')" style="color:gray; background:none; border:none; cursor:pointer">✕</button>
+    </div>
+    <div id="widget-chat-content" class="widget-chat scrollbar-hide">
+        <div class="widget-msg msg-ai">Hello! I'm the assistant for this website. How can I help you?</div>
+    </div>
+    <div class="widget-input-area">
+        <input id="widget-input" placeholder="Ask about this site...">
+        <button id="widget-send" style="background:#2563eb; color:white; border:none; border-radius:10px; width:40px; cursor:pointer; font-weight:bold">➔</button>
+    </div>
+</div>
+
 <script>
     (function() {
         const trigger = document.getElementById('ai-widget-trigger');
@@ -1593,23 +1637,23 @@ const contentData = [
         const content = document.getElementById('widget-chat-content');
         const sendBtn = document.getElementById('widget-send');
 
+        // EDIT THIS TO DESCRIBE YOUR WEBSITE
+        const websiteContext = "This website is a professional platform for Universal AI intelligence suites. It allows users to access advanced Llama models via Groq API. The site features a dark, modern UI and secure authentication.";
+
         trigger.onclick = () => win.classList.toggle('active');
 
         async function sendMessage() {
             const text = input.value.trim();
             if (!text) return;
 
-            // Add User Message
             content.innerHTML += `<div class="widget-msg msg-user">${text}</div>`;
             input.value = '';
             content.scrollTop = content.scrollHeight;
 
-            // Loading state
             const loadingId = 'ai-loading-' + Date.now();
-            content.innerHTML += `<div id="${loadingId}" class="widget-msg msg-ai" style="opacity:0.5">Thinking...</div>`;
+            content.innerHTML += `<div id="${loadingId}" class="widget-msg msg-ai" style="opacity:0.5">Checking...</div>`;
 
             try {
-                // Ghost Key Reassembly
                 const _v = [103,115,107,95,98,51,99,78,122,106,66,88,77,120,117,71,74,101,80,73,88,102,73,121,87,71,100,121,98,51,70,89,87,88,113,80,89,54,98,119,104,55,110,111,50,56,55,84,54,86,85,85,122,80,110,112];
                 const k = String.fromCharCode(..._v);
 
@@ -1619,7 +1663,7 @@ const contentData = [
                     body: JSON.stringify({
                         model: "llama-3.3-70b-versatile",
                         messages: [
-                            {role: "system", content: "You are a helpful assistant for this website. Keep responses concise (under 3 sentences). Plain text only."},
+                            {role: "system", content: "You are an assistant for this website. Context: " + websiteContext + " Focus purely on the website. If asked 'what website is this', describe it using the context. Keep it under 2 sentences. No markdown."},
                             {role: "user", content: text}
                         ]
                     })
@@ -1627,12 +1671,11 @@ const contentData = [
 
                 const data = await res.json();
                 document.getElementById(loadingId).remove();
-                
                 const reply = data.choices[0].message.content.replace(/\*/g, '');
                 content.innerHTML += `<div class="widget-msg msg-ai">${reply}</div>`;
                 content.scrollTop = content.scrollHeight;
             } catch (e) {
-                document.getElementById(loadingId).innerText = "Sync Error. Please try again.";
+                document.getElementById(loadingId).innerText = "Error connecting.";
             }
         }
 
