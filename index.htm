@@ -1513,7 +1513,14 @@ const contentData = [
 <a href="https://help-page-pied.vercel.app/" target="_blank" style="color: blue">HELP</a>
 <style>
     #ai-widget { position: fixed; bottom: 20px; right: 20px; z-index: 9999; font-family: 'Poppins', sans-serif; }
-    #ai-btn { width: 60px; height: 60px; background: #0077b6; border: none; border-radius: 50%; color: white; font-size: 24px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
+    
+    /* Fixed Centering for the Logo */
+    #ai-btn { 
+        width: 60px; height: 60px; background: #0077b6; border: none; border-radius: 50%; 
+        color: white; font-size: 24px; cursor: pointer; box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        display: flex; align-items: center; justify-content: center; padding: 0; margin: 0;
+    }
+    
     #ai-card { position: absolute; bottom: 80px; right: 0; width: 330px; height: 450px; background: white; border-radius: 20px; display: none; flex-direction: column; box-shadow: 0 10px 30px rgba(0,0,0,0.2); border: 1px solid #ddd; overflow: hidden; }
     body.dark-mode #ai-card { background: #2a2a2a; color: white; border-color: #444; }
     .ai-header { background: #0077b6; color: white; padding: 15px; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
@@ -1549,16 +1556,12 @@ const contentData = [
         async function askAI() {
             const val = input.value.trim();
             if (!val) return;
-
             log.innerHTML += `<div style="margin-top:10px; color:#0077b6"><b>You:</b> ${val}</div>`;
             input.value = '';
             log.scrollTop = log.scrollHeight;
-
             try {
-                // Ghost Key Reassembly
                 const _v = [103,115,107,95,98,51,99,78,122,106,66,88,77,120,117,71,74,101,80,73,88,102,73,121,87,71,100,121,98,51,70,89,87,88,113,80,89,54,98,119,104,55,110,111,50,56,55,84,54,86,85,85,122,80,110,112];
                 const k = String.fromCharCode(..._v);
-
                 const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
                     method: 'POST',
                     headers: { 'Authorization': 'Bearer ' + k, 'Content-Type': 'application/json' },
@@ -1577,7 +1580,6 @@ const contentData = [
                 log.innerHTML += `<div style="color:red; margin-top:5px;">Sync Error.</div>`;
             }
         }
-
         send.onclick = askAI;
         input.onkeydown = (e) => { if(e.key === 'Enter') askAI(); };
     })();
