@@ -1586,43 +1586,75 @@ const contentData = [
 </script>
 <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
+<div id="birthday-overlay" style="
+    display: none; 
+    position: fixed; 
+    top: 0; left: 0; 
+    width: 100%; height: 100%; 
+    background: #ff477e; /* Modern Pink */
+    color: white; 
+    z-index: 9999; 
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+    pointer-events: none;
+">
+    <h1 style="font-size: 5rem; font-weight: 800; margin: 0; letter-spacing: -2px;">Happy Birthday MOM! ❤️</h1>
+    <p style="font-size: 1.5rem; opacity: 0.9; margin-top: 20px;">Press ESC to return</p>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
 <script>
+    const overlay = document.getElementById('birthday-overlay');
+
     document.addEventListener('keydown', function(event) {
-        // Check for Alt + M (case insensitive)
+        // Trigger on Alt + M
         if (event.altKey && (event.key === 'm' || event.key === 'M')) {
-            event.preventDefault(); // Prevents browser conflicts
-            
-            // 1. Alert Message
-            alert("Happy Birthday MOM! ❤️");
-
-            // 2. Confetti Cannon Logic
-            const duration = 3 * 1000;
-            const end = Date.now() + duration;
-
-            (function frame() {
-                // Left Cannon
-                confetti({
-                    particleCount: 5,
-                    angle: 60,
-                    spread: 55,
-                    origin: { x: 0 },
-                    colors: ['#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#fbb1bd']
-                });
-                // Right Cannon
-                confetti({
-                    particleCount: 5,
-                    angle: 120,
-                    spread: 55,
-                    origin: { x: 1 },
-                    colors: ['#ff0a54', '#ff477e', '#ff7096', '#ff85a1', '#fbb1bd']
-                });
-
-                if (Date.now() < end) {
-                    requestAnimationFrame(frame);
-                }
-            }());
+            event.preventDefault();
+            showCelebration();
+        }
+        
+        // Hide on Escape
+        if (event.key === 'Escape') {
+            overlay.style.opacity = '0';
+            setTimeout(() => { overlay.style.display = 'none'; }, 500);
         }
     });
+
+    function showCelebration() {
+        // Show the Pink Background
+        overlay.style.display = 'flex';
+        // Small timeout to allow transition to trigger
+        setTimeout(() => { overlay.style.opacity = '1'; }, 10);
+        
+        // Fire the Confetti Cannons immediately
+        fireConfetti();
+    }
+
+    function fireConfetti() {
+        const count = 200;
+        const defaults = { origin: { y: 0.7 }, zIndex: 10000 };
+
+        function fire(particleRatio, opts) {
+            confetti({
+                ...defaults,
+                ...opts,
+                particleCount: Math.floor(count * particleRatio),
+                colors: ['#ffffff', '#ffccd5', '#ffb3c1', '#ff85a1'] // White and Pinks
+            });
+        }
+
+        fire(0.25, { spread: 26, startVelocity: 55 });
+        fire(0.2, { spread: 60 });
+        fire(0.35, { spread: 100, decay: 0.91, scalar: 0.8 });
+        fire(0.1, { spread: 120, startVelocity: 25, decay: 0.92, scalar: 1.2 });
+        fire(0.1, { spread: 120, startVelocity: 45 });
+    }
 </script>
 </body>
 </html>
